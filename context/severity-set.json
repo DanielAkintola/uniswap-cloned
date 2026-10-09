@@ -1,0 +1,27 @@
+[
+  {
+    "body_markdown": "Direct theft of funds without limitations of external conditions and can be triggered at any moment. The loss of the affected party must be significant, excluding unclaimed yield/rewards.",
+    "display_name": "Critical",
+    "identifier": "severity-def:critical-v2"
+  },
+  {
+    "body_markdown": "Direct loss of funds with considerable limitations of external conditions, i.e., requires specific but non-extreme conditions. The loss of the affected party must be considerable.",
+    "display_name": "High",
+    "identifier": "severity-def:high-v2"
+  },
+  {
+    "body_markdown": "1. Causes a loss of funds but requires certain external conditions or specific states, or a loss is highly constrained. The loss must be relevant to the affected party.\n2. Breaks **core** contract functionality, which renders the contract useless or leads to loss of funds that's relevant to the affected party.",
+    "display_name": "Medium",
+    "identifier": "severity-def:medium-v4"
+  },
+  {
+    "body_markdown": "1. Causes a minor loss of funds only under extreme external conditions, or the loss is recoverable by admins.\n2. Breaks contract functionality without a direct loss of funds, causing minor disruption of the protocol workflow or requiring admin intervention to resolve the issue.",
+    "display_name": "Low",
+    "identifier": "severity-def:low-v4"
+  },
+  {
+    "body_markdown": "Info is a catch-all severity for any issue that doesn't qualify for Low or higher severity. This includes issues that are technically valid but fall short of Low, as well as issues that are ultimately determined to be invalid. Info severity by itself does not indicate whether an issue is valid or correct and is not rewarded.",
+    "display_name": "Info",
+    "identifier": "severity-def:info-v1"
+  }
+]

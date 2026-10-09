@@ -1,0 +1,912 @@
+[
+  {
+    "id": "scope-pins-and-file-list",
+    "path": "context/scope.json",
+    "dimensions": [
+      "scope"
+    ],
+    "instruction": "Audit the two codebases only at the pinned commits and use each in_scope_files array as the authoritative file list.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/scope.json",
+        "location": "codebases[0] and codebases[1]"
+      }
+    ]
+  },
+  {
+    "id": "scope-parent-and-library-qualification",
+    "path": "context/judging-guidelines.md",
+    "dimensions": [
+      "scope",
+      "tf"
+    ],
+    "instruction": "An in-scope contract includes its parent contracts; a library defect qualifies when an in-scope contract uses and is affected by it. Repository contracts outside scope do not qualify.",
+    "level": "platform",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/judging-guidelines.md",
+        "location": "§ I.6 Contract Scope, lines 33-36"
+      }
+    ]
+  },
+  {
+    "id": "selected-sherlock-validity-rules",
+    "path": "context/judging-guidelines.md",
+    "dimensions": [
+      "tf",
+      "scope",
+      "known",
+      "severity"
+    ],
+    "instruction": "Apply the selected Sherlock guidelines in full, including hierarchy of truth, trust defaults, invalid and valid categories, proof-of-concept rules, and the rule for acknowledged prior-audit issues.",
+    "level": "platform",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/judging-guidelines.md",
+        "location": "§§ I and IX-XI, lines 5-37 and 133-177"
+      }
+    ]
+  },
+  {
+    "id": "complete-severity-conditions",
+    "path": "context/severity-set.json",
+    "dimensions": [
+      "severity"
+    ],
+    "instruction": "Use the ordered pinned severity definitions together with the guidelines’ denial-of-service conditions, quantitative loss thresholds, replay note, likelihood rule, proof-of-concept requirement, and private-mempool downgrade. Medium requires the complete conditions in both sources.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/severity-set.json",
+        "location": "complete ordered array"
+      },
+      {
+        "path": "context/judging-guidelines.md",
+        "location": "§ I.4, lines 20-29; §§ III-VII, lines 74-123; § IX, lines 133-139"
+      }
+    ]
+  },
+  {
+    "id": "severity-companion-rendering",
+    "path": "context/severities.md",
+    "dimensions": [
+      "severity"
+    ],
+    "instruction": "This supplied companion renders severity labels and reward weights; use severity-set.json and the selected guidelines, not the weights alone, to qualify severity.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/severities.md",
+        "location": "complete document"
+      },
+      {
+        "path": "context/severity-set.json",
+        "location": "complete ordered array"
+      }
+    ]
+  },
+  {
+    "id": "deduplication-source-view",
+    "path": "context/deduplication-guidelines.md",
+    "dimensions": [],
+    "instruction": "Use this source-referenced view before comparing a target report and a potential duplicate; the selected Sherlock duplication rules have highest authority.",
+    "level": "platform",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/deduplication-guidelines.md",
+        "location": "complete document"
+      },
+      {
+        "path": "context/judging-guidelines.md",
+        "location": "§ XII, lines 179-222"
+      }
+    ]
+  },
+  {
+    "id": "architecture-and-change-overview",
+    "path": "context/UR-2.3.0-contest-context.md",
+    "dimensions": [],
+    "instruction": "Use the overview to understand actors, core execution flows, and the changes introduced between 2.1.x and 2.3.0; it is orientation, not a review priority or risk ranking.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 1, lines 3-33"
+      }
+    ]
+  },
+  {
+    "id": "chains-tokens-and-integrations",
+    "path": "context/UR-2.3.0-contest-context.md",
+    "dimensions": [
+      "scope",
+      "tf"
+    ],
+    "instruction": "Apply the listed chain behavior and integration trust assumptions. Standard ERC20 and native ETH are supported; fee-on-transfer tokens are in scope subject to section 6, while rebasing, transfer-hook, over-limit, and self-harm-only malicious-token cases are excluded as stated.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 2, lines 35-60"
+      }
+    ]
+  },
+  {
+    "id": "engagement-trust-model",
+    "path": "context/UR-2.3.0-contest-context.md",
+    "dimensions": [
+      "tf",
+      "scope"
+    ],
+    "instruction": "There is no admin. The caller and calldata are trusted for the caller’s funds. User-chosen route components are untrusted, but self-harm within the user’s own bounds is invalid; harm to others or beyond those bounds is valid. Apply the source’s locker-based definition of user.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 3, lines 62-84"
+      }
+    ]
+  },
+  {
+    "id": "dependency-boundary",
+    "path": "context/UR-2.3.0-contest-context.md",
+    "dimensions": [
+      "scope",
+      "known"
+    ],
+    "instruction": "v4-core and Permit2 are dependencies outside code scope, but their documented behaviors apply. The cited v4-core audits and Known Effects of Hook Permissions remain prior-disclosure context.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 4, line 102"
+      },
+      {
+        "path": "context/out-of-scope.md",
+        "location": "items 1-2"
+      }
+    ]
+  },
+  {
+    "id": "build-test-and-poc-setup",
+    "path": "context/SETUP-SUBMODULES.md",
+    "dimensions": [],
+    "instruction": "The staged lib directories are empty. For dependency-complete builds, clone the public repositories at the pinned commits, initialize submodules, and follow the repository-specific commands and RPC requirement.",
+    "level": "repo",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/SETUP-SUBMODULES.md",
+        "location": "complete document"
+      },
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 5, lines 104-119"
+      }
+    ]
+  },
+  {
+    "id": "current-contest-code-qualification",
+    "path": "context/live_deployments.md",
+    "dimensions": [
+      "tf",
+      "scope"
+    ],
+    "instruction": "A valid issue must exist in the pinned 2.3.0 contest code. An issue fixed there is invalid even if it remains in an older deployment.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/live_deployments.md",
+        "location": "Summary, lines 15-35"
+      }
+    ]
+  },
+  {
+    "id": "live-code-reward-context",
+    "path": "context/uniswap-reward-structure.md",
+    "dimensions": [],
+    "instruction": "This document defines payout families, caps, and the live-code multiplier. It does not replace the pinned validity, scope, or severity rules.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/uniswap-reward-structure.md",
+        "location": "§§ 1-7"
+      },
+      {
+        "path": "context/live_deployments.md",
+        "location": "Summary and §§ 1-4"
+      }
+    ]
+  },
+  {
+    "id": "all-listed-audits-are-known",
+    "path": "context/UR-2.3.0-contest-context.md",
+    "dimensions": [
+      "known",
+      "tf"
+    ],
+    "instruction": "All issues in every report listed in section 4 are known. Submissions matching any item in section 6 are invalid.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 4, lines 86-100; § 6, lines 121-123"
+      }
+    ]
+  },
+  {
+    "id": "externally-referenced-disclosures",
+    "path": "context/UR-2.3.0-contest-context.md",
+    "dimensions": [
+      "known"
+    ],
+    "instruction": "The source also identifies the 2024 Cantina v4 competition and the ongoing Uniswap Cantina bounty as disclosure sources. Their issue bodies were not supplied locally; use the local section 6 expansions and out-of-scope list, and follow the source links when a candidate may match an unexpanded disclosure.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 4, lines 86-102"
+      },
+      {
+        "path": "context/out-of-scope.md",
+        "location": "source note and items 1-12"
+      }
+    ]
+  },
+  {
+    "id": "cantina-v4-out-of-scope-list",
+    "path": "context/out-of-scope.md",
+    "dimensions": [
+      "scope",
+      "known",
+      "tf"
+    ],
+    "instruction": "The twelve-item 2024 Cantina v4 competition out-of-scope list still applies to this engagement, including prior-review issues and documented effects of hook permissions.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 6.M, lines 333-340"
+      },
+      {
+        "path": "context/out-of-scope.md",
+        "location": "complete twelve-item list"
+      }
+    ]
+  },
+  {
+    "id": "prior-disclosure-locator",
+    "path": "context/prior-disclosures.json",
+    "dimensions": [
+      "known"
+    ],
+    "instruction": "Use this locator to search every finding in the locally supplied audit reports by report, identifier, title or summary, then read the cited unchanged report section for the authoritative details and resolution notes.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/prior-disclosures.json",
+        "location": "all report and issue records"
+      },
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 4, lines 86-100"
+      }
+    ]
+  },
+  {
+    "id": "known-router-custody-and-execution",
+    "path": "context/UR-2.3.0-contest-context.md",
+    "dimensions": [
+      "known",
+      "tf"
+    ],
+    "instruction": "Submissions matching any item in section 6.A are invalid. The section covers router custody, allow-revert behavior, decoding, reentrancy, deadlines, command types, and Across deposits; preserve every condition and exception in the cited text.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 6.A, lines 125-164"
+      }
+    ]
+  },
+  {
+    "id": "known-payments-and-permit2",
+    "path": "context/UR-2.3.0-contest-context.md",
+    "dimensions": [
+      "known",
+      "tf"
+    ],
+    "instruction": "Submissions matching any item in section 6.B are invalid. The section covers codeless tokens, permit front-running, payer rules, ETH, portions, WETH, and adapter balance commands; preserve every condition and exception in the cited text.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 6.B, lines 165-178"
+      }
+    ]
+  },
+  {
+    "id": "known-uniswap-v2",
+    "path": "context/UR-2.3.0-contest-context.md",
+    "dimensions": [
+      "known",
+      "tf"
+    ],
+    "instruction": "Submissions matching any item in section 6.C are invalid. The section covers donations, exact-output behavior, fee and rounding, and CREATE2 pair addressing; preserve every condition and exception in the cited text.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 6.C, lines 179-189"
+      }
+    ]
+  },
+  {
+    "id": "known-uniswap-v3",
+    "path": "context/UR-2.3.0-contest-context.md",
+    "dimensions": [
+      "known",
+      "tf"
+    ],
+    "instruction": "Submissions matching any item in section 6.D are invalid. The section covers partial fills, contract-balance donations, exact output, fee-on-transfer behavior, callbacks, and paths; preserve every condition and exception in the cited text.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 6.D, lines 190-201"
+      }
+    ]
+  },
+  {
+    "id": "known-uniswap-v4",
+    "path": "context/UR-2.3.0-contest-context.md",
+    "dimensions": [
+      "known",
+      "tf"
+    ],
+    "instruction": "Submissions matching any item in section 6.E are invalid. The section covers supported actions, settlement and deltas, slippage and per-hop bounds, hooks, partial fills, fee-on-transfer behavior, and sender context; preserve every condition and exception in the cited text.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 6.E, lines 202-243"
+      }
+    ]
+  },
+  {
+    "id": "known-resolved-amounts",
+    "path": "context/UR-2.3.0-contest-context.md",
+    "dimensions": [
+      "known",
+      "tf"
+    ],
+    "instruction": "Submissions matching any item in section 6.F are invalid. The section covers resolver trust, sentinel handling, register lifetime, sub-plans, failure handling, and secondary sentinel mapping; preserve every condition and exception in the cited text.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 6.F, lines 244-258"
+      }
+    ]
+  },
+  {
+    "id": "known-nested-execution",
+    "path": "context/UR-2.3.0-contest-context.md",
+    "dimensions": [
+      "known",
+      "tf"
+    ],
+    "instruction": "Submissions matching any item in section 6.G are invalid. The section covers nested execution gating, shared deltas, caller responsibility, outside-unlock behavior, and other v4 commands; preserve every condition and exception in the cited text.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 6.G, lines 259-268"
+      }
+    ]
+  },
+  {
+    "id": "known-signed-routes",
+    "path": "context/UR-2.3.0-contest-context.md",
+    "dimensions": [
+      "known",
+      "tf"
+    ],
+    "instruction": "Submissions matching any item in section 6.H are invalid. The section covers signed-route funding, signature coverage, replay, sender verification, and public execution context; preserve every condition and exception in the cited text.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 6.H, lines 269-278"
+      }
+    ]
+  },
+  {
+    "id": "known-swap-proxy",
+    "path": "context/UR-2.3.0-contest-context.md",
+    "dimensions": [
+      "known",
+      "tf"
+    ],
+    "instruction": "Submissions matching any item in section 6.I are invalid. The section covers locker identity, recipients, payer behavior, user-supplied router, sweeping, ETH, codeless tokens, fee-on-transfer, and callbacks; preserve every condition and exception in the cited text.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 6.I, lines 279-291"
+      }
+    ]
+  },
+  {
+    "id": "known-migrator-and-position-managers",
+    "path": "context/UR-2.3.0-contest-context.md",
+    "dimensions": [
+      "known",
+      "tf"
+    ],
+    "instruction": "Submissions matching any item in section 6.J are invalid. The section covers position-manager action filtering, approvals, sender mapping, ETH forwarding, external control, and v3 migration; preserve every condition and exception in the cited text.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 6.J, lines 292-308"
+      }
+    ]
+  },
+  {
+    "id": "known-protocol-fee-commands",
+    "path": "context/UR-2.3.0-contest-context.md",
+    "dimensions": [
+      "known",
+      "tf"
+    ],
+    "instruction": "Submissions matching any item in section 6.K are invalid. The section covers permissionless fee pokes, controller lookup, and missing-adapter behavior; preserve every condition and exception in the cited text.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 6.K, lines 309-316"
+      }
+    ]
+  },
+  {
+    "id": "known-permissioned-pools",
+    "path": "context/UR-2.3.0-contest-context.md",
+    "dimensions": [
+      "known",
+      "tf"
+    ],
+    "instruction": "Submissions matching any item in section 6.L are invalid. The section covers adapter verification, permission subject, swap-only boundaries, intermediate hops, shared underlyings, truncation, and other adapter behavior; preserve every condition and exception in the cited text.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 6.L, lines 317-332"
+      }
+    ]
+  },
+  {
+    "id": "known-token-and-math-assumptions",
+    "path": "context/UR-2.3.0-contest-context.md",
+    "dimensions": [
+      "known",
+      "tf",
+      "scope"
+    ],
+    "instruction": "Submissions matching any item in section 6.M are invalid. The section covers supply limits, rebasing behavior, native Blast yield, and the continuing Cantina out-of-scope list; preserve every condition and exception in the cited text.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 6.M, lines 333-341"
+      }
+    ]
+  },
+  {
+    "id": "known-deployment-and-code-quality",
+    "path": "context/UR-2.3.0-contest-context.md",
+    "dimensions": [
+      "known",
+      "tf"
+    ],
+    "instruction": "Submissions matching any item in section 6.N are invalid. The section covers contract size, optimizer choice, transient slots, lock internals, style, and duplication; preserve every condition and exception in the cited text.",
+    "level": "engagement",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 6.N, lines 342-353"
+      }
+    ]
+  },
+  {
+    "id": "code-execute-nested-warning",
+    "path": "Uniswap__universal-router/contracts/interfaces/IUniversalRouter.sol",
+    "dimensions": [
+      "tf",
+      "known"
+    ],
+    "instruction": "executeNested is only for a contract that opened the surrounding PoolManager unlock; v4 deltas are shared for that unlock, so a permissionless path into this entrypoint can expose that contract’s capital and credit. This misuse is disclosed and accepted.",
+    "level": "repo",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "Uniswap__universal-router/contracts/interfaces/IUniversalRouter.sol",
+        "location": "NatSpec for executeNested, lines 68-84"
+      },
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 6.G, lines 259-268"
+      }
+    ]
+  },
+  {
+    "id": "code-swap-proxy-usage-constraints",
+    "path": "Uniswap__universal-router/contracts/SwapProxy.sol",
+    "dimensions": [
+      "tf",
+      "known"
+    ],
+    "instruction": "SwapProxy routes must use payerIsUser=false and explicit user recipients rather than MSG_SENDER; token inputs are intended, ETH-input actions should go directly to the router, and codeless token transfers silently succeed.",
+    "level": "repo",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "Uniswap__universal-router/contracts/SwapProxy.sol",
+        "location": "NatSpec and note, lines 9-16 and 29-30"
+      },
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 6.I, lines 279-291"
+      }
+    ]
+  },
+  {
+    "id": "code-deprecated-delta-actions",
+    "path": "Uniswap__v4-periphery/src/libraries/Actions.sol",
+    "dimensions": [
+      "tf",
+      "known"
+    ],
+    "instruction": "INCREASE_LIQUIDITY_FROM_DELTAS and MINT_POSITION_FROM_DELTAS are explicitly deprecated as sandwich-vulnerable because the delta-based approach lacks minimum-liquidity slippage protection.",
+    "level": "repo",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "Uniswap__v4-periphery/src/libraries/Actions.sol",
+        "location": "lines 15-24"
+      },
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 6.J, lines 292-301"
+      }
+    ]
+  },
+  {
+    "id": "known-report-abdk-ur-v1-2022",
+    "path": "context/ABDK_Uniswap_UniversalRouter_v_2_0.md",
+    "dimensions": [
+      "known"
+    ],
+    "instruction": "Every issue in ABDK Universal Router v2.0 (2022) is a known prior disclosure. Use the report for matching details and resolution notes; apply this engagement’s current scope and severity sources rather than the report’s historical schemes.",
+    "level": "repo",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 4, lines 86-100"
+      },
+      {
+        "path": "context/ABDK_Uniswap_UniversalRouter_v_2_0.md",
+        "location": "finding sections, lines 258-1848"
+      },
+      {
+        "path": "context/ABDK_Uniswap_UniversalRouter_v_2_0.pdf",
+        "location": "complete duplicate or original report copy"
+      },
+      {
+        "path": "context/derived/Uniswap__universal-router/audit/ABDK_Uniswap_UniversalRouter_v_2_0.md",
+        "location": "complete duplicate or original report copy"
+      },
+      {
+        "path": "Uniswap__universal-router/audit/ABDK_Uniswap_UniversalRouter_v_2_0.pdf",
+        "location": "complete duplicate or original report copy"
+      }
+    ]
+  },
+  {
+    "id": "known-report-abdk-v4-periphery-ur-2024",
+    "path": "context/DRAFT_ABDK_audit_periphery_universal_router.md",
+    "dimensions": [
+      "known"
+    ],
+    "instruction": "Every issue in ABDK v4-periphery and Universal Router draft (2024) is a known prior disclosure. Use the report for matching details and resolution notes; apply this engagement’s current scope and severity sources rather than the report’s historical schemes.",
+    "level": "repo",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 4, lines 86-100"
+      },
+      {
+        "path": "context/DRAFT_ABDK_audit_periphery_universal_router.md",
+        "location": "finding sections, lines 301-2012"
+      },
+      {
+        "path": "context/DRAFT_ABDK_audit_periphery_universal_router.pdf",
+        "location": "complete duplicate or original report copy"
+      },
+      {
+        "path": "context/derived/Uniswap__universal-router/audit/DRAFT_ABDK_audit_periphery_universal_router.md",
+        "location": "complete duplicate or original report copy"
+      },
+      {
+        "path": "context/derived/Uniswap__v4-periphery/audits/DRAFT_ABDK_audit_periphery_universal_router.md",
+        "location": "complete duplicate or original report copy"
+      },
+      {
+        "path": "Uniswap__universal-router/audit/DRAFT_ABDK_audit_periphery_universal_router.pdf",
+        "location": "complete duplicate or original report copy"
+      },
+      {
+        "path": "Uniswap__v4-periphery/audits/DRAFT_ABDK_audit_periphery_universal_router.pdf",
+        "location": "complete duplicate or original report copy"
+      }
+    ]
+  },
+  {
+    "id": "known-report-spearbit-ur-2024",
+    "path": "context/derived/Uniswap__universal-router/audit/DRAFT_Spearbit_audit_UR.md",
+    "dimensions": [
+      "known"
+    ],
+    "instruction": "Every issue in Spearbit Universal Router draft (2024) is a known prior disclosure. Use the report for matching details and resolution notes; apply this engagement’s current scope and severity sources rather than the report’s historical schemes.",
+    "level": "repo",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 4, lines 86-100"
+      },
+      {
+        "path": "context/derived/Uniswap__universal-router/audit/DRAFT_Spearbit_audit_UR.md",
+        "location": "finding sections, lines 192-323"
+      },
+      {
+        "path": "Uniswap__universal-router/audit/DRAFT_Spearbit_audit_UR.pdf",
+        "location": "complete duplicate or original report copy"
+      }
+    ]
+  },
+  {
+    "id": "known-report-openzeppelin-v4-periphery-ur-2024",
+    "path": "context/derived/Uniswap__universal-router/audit/OpenZeppelin_audit_periphery_universal_router.md",
+    "dimensions": [
+      "known"
+    ],
+    "instruction": "Every issue in OpenZeppelin v4 Periphery and Universal Router (2024) is a known prior disclosure. Use the report for matching details and resolution notes; apply this engagement’s current scope and severity sources rather than the report’s historical schemes.",
+    "level": "repo",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 4, lines 86-100"
+      },
+      {
+        "path": "context/derived/Uniswap__universal-router/audit/OpenZeppelin_audit_periphery_universal_router.md",
+        "location": "finding sections, lines 227-826"
+      },
+      {
+        "path": "context/derived/Uniswap__v4-periphery/audits/OpenZeppelin_audit_periphery_universal_router.md",
+        "location": "complete duplicate or original report copy"
+      },
+      {
+        "path": "Uniswap__universal-router/audit/OpenZeppelin_audit_periphery_universal_router.pdf",
+        "location": "complete duplicate or original report copy"
+      },
+      {
+        "path": "Uniswap__v4-periphery/audits/OpenZeppelin_audit_periphery_universal_router.pdf",
+        "location": "complete duplicate or original report copy"
+      }
+    ]
+  },
+  {
+    "id": "known-report-openzeppelin-ur-2-1-2025",
+    "path": "context/derived/Uniswap__universal-router/audit/Universal Router 2.1 And V4 Periphery Audit.md",
+    "dimensions": [
+      "known"
+    ],
+    "instruction": "Every issue in OpenZeppelin Universal Router 2.1 and v4 Periphery (2025) is a known prior disclosure. Use the report for matching details and resolution notes; apply this engagement’s current scope and severity sources rather than the report’s historical schemes.",
+    "level": "repo",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 4, lines 86-100"
+      },
+      {
+        "path": "context/derived/Uniswap__universal-router/audit/Universal Router 2.1 And V4 Periphery Audit.md",
+        "location": "finding sections, lines 118-161"
+      },
+      {
+        "path": "Uniswap__universal-router/audit/Universal Router 2.1 And V4 Periphery Audit.pdf",
+        "location": "complete duplicate or original report copy"
+      }
+    ]
+  },
+  {
+    "id": "known-report-openzeppelin-swap-proxy-2026",
+    "path": "context/derived/Uniswap__universal-router/audit/Universal Router SwapProxy And Periphery Audit.md",
+    "dimensions": [
+      "known"
+    ],
+    "instruction": "Every issue in OpenZeppelin Universal Router SwapProxy and Periphery (2026) is a known prior disclosure. Use the report for matching details and resolution notes; apply this engagement’s current scope and severity sources rather than the report’s historical schemes.",
+    "level": "repo",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 4, lines 86-100"
+      },
+      {
+        "path": "context/derived/Uniswap__universal-router/audit/Universal Router SwapProxy And Periphery Audit.md",
+        "location": "finding sections, lines 191-453"
+      },
+      {
+        "path": "Uniswap__universal-router/audit/Universal Router SwapProxy And Periphery Audit.pdf",
+        "location": "complete duplicate or original report copy"
+      }
+    ]
+  },
+  {
+    "id": "known-report-openzeppelin-ur-2-3-diff-2026",
+    "path": "context/derived/Uniswap__universal-router/audit/Universal Router 2.3.0 And V4 Periphery Diff Audit.md",
+    "dimensions": [
+      "known"
+    ],
+    "instruction": "Every issue in OpenZeppelin Universal Router 2.3.0 diff (2026) is a known prior disclosure. Use the report for matching details and resolution notes; apply this engagement’s current scope and severity sources rather than the report’s historical schemes.",
+    "level": "repo",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 4, lines 86-100"
+      },
+      {
+        "path": "context/derived/Uniswap__universal-router/audit/Universal Router 2.3.0 And V4 Periphery Diff Audit.md",
+        "location": "finding sections, lines 342-577"
+      },
+      {
+        "path": "Uniswap__universal-router/audit/Universal Router 2.3.0 And V4 Periphery Diff Audit.pdf",
+        "location": "complete duplicate or original report copy"
+      }
+    ]
+  },
+  {
+    "id": "known-report-spearbit-v4-periphery-2024",
+    "path": "context/derived/Uniswap__v4-periphery/audits/DRAFT_Spearbit_audit_periphery.md",
+    "dimensions": [
+      "known"
+    ],
+    "instruction": "Every issue in Spearbit v4-periphery draft (2024) is a known prior disclosure. Use the report for matching details and resolution notes; apply this engagement’s current scope and severity sources rather than the report’s historical schemes.",
+    "level": "repo",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 4, lines 86-100"
+      },
+      {
+        "path": "context/derived/Uniswap__v4-periphery/audits/DRAFT_Spearbit_audit_periphery.md",
+        "location": "finding sections, lines 240-2480"
+      },
+      {
+        "path": "Uniswap__v4-periphery/audits/DRAFT_Spearbit_audit_periphery.pdf",
+        "location": "complete duplicate or original report copy"
+      }
+    ]
+  },
+  {
+    "id": "known-report-cantina-permissioned-pools-2026",
+    "path": "context/derived/Uniswap__v4-periphery/audits/permissionedPools/Cantina_report_permissioned_pools.md",
+    "dimensions": [
+      "known"
+    ],
+    "instruction": "Every issue in Cantina Permissioned Pools (2026) is a known prior disclosure. Use the report for matching details and resolution notes; apply this engagement’s current scope and severity sources rather than the report’s historical schemes.",
+    "level": "repo",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 4, lines 86-100"
+      },
+      {
+        "path": "context/derived/Uniswap__v4-periphery/audits/permissionedPools/Cantina_report_permissioned_pools.md",
+        "location": "finding sections, lines 133-658"
+      },
+      {
+        "path": "Uniswap__v4-periphery/audits/permissionedPools/Cantina_report_permissioned_pools.pdf",
+        "location": "complete duplicate or original report copy"
+      }
+    ]
+  },
+  {
+    "id": "known-report-openzeppelin-permissioned-pools-2026",
+    "path": "context/derived/Uniswap__v4-periphery/audits/permissionedPools/OpenZeppelin_permissioned_pools_report.md",
+    "dimensions": [
+      "known"
+    ],
+    "instruction": "Every issue in OpenZeppelin Permissioned Pools (2026) is a known prior disclosure. Use the report for matching details and resolution notes; apply this engagement’s current scope and severity sources rather than the report’s historical schemes.",
+    "level": "repo",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 4, lines 86-100"
+      },
+      {
+        "path": "context/derived/Uniswap__v4-periphery/audits/permissionedPools/OpenZeppelin_permissioned_pools_report.md",
+        "location": "finding sections, lines 170-568"
+      },
+      {
+        "path": "Uniswap__v4-periphery/audits/permissionedPools/OpenZeppelin_permissioned_pools_report.pdf",
+        "location": "complete duplicate or original report copy"
+      }
+    ]
+  },
+  {
+    "id": "known-report-openzeppelin-permissioned-pools-fix-2026",
+    "path": "context/derived/Uniswap__v4-periphery/audits/permissionedPools/OpenZeppelin_permissioned_pools_fix_review_report.md",
+    "dimensions": [
+      "known"
+    ],
+    "instruction": "Every issue in OpenZeppelin Permissioned Pools fix review (2026) is a known prior disclosure. Use the report for matching details and resolution notes; apply this engagement’s current scope and severity sources rather than the report’s historical schemes.",
+    "level": "repo",
+    "visibility": "participants",
+    "sources": [
+      {
+        "path": "context/UR-2.3.0-contest-context.md",
+        "location": "§ 4, lines 86-100"
+      },
+      {
+        "path": "context/derived/Uniswap__v4-periphery/audits/permissionedPools/OpenZeppelin_permissioned_pools_fix_review_report.md",
+        "location": "finding sections, lines 138-279"
+      },
+      {
+        "path": "Uniswap__v4-periphery/audits/permissionedPools/OpenZeppelin_permissioned_pools_fix_review_report.pdf",
+        "location": "complete duplicate or original report copy"
+      }
+    ]
+  }
+]
+

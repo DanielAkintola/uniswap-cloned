@@ -1,0 +1,2809 @@
+[
+  {
+    "report_id": "abdk-ur-v1-2022",
+    "title": "ABDK Universal Router v2.0 (2022)",
+    "path": "context/ABDK_Uniswap_UniversalRouter_v_2_0.md",
+    "copies": [
+      "context/ABDK_Uniswap_UniversalRouter_v_2_0.pdf",
+      "context/derived/Uniswap__universal-router/audit/ABDK_Uniswap_UniversalRouter_v_2_0.md",
+      "Uniswap__universal-router/audit/ABDK_Uniswap_UniversalRouter_v_2_0.pdf"
+    ],
+    "declared_findings": 102,
+    "indexed_findings": 101,
+    "source_note": "The report summary says 102 issues, but the supplied PDF and Markdown contain 101 CVF headings; CVF-40 is absent.",
+    "issues": [
+      {
+        "id": "CVF-54",
+        "classification": "Critical",
+        "status": "FIXED",
+        "source_file": "V3SwapRouter.sol",
+        "summary": "This function doesn't verify the caller, so anyone can call it with arbitrary payer address and take funds approved by the payer to the router.",
+        "location": "lines 258-269"
+      },
+      {
+        "id": "CVF-60",
+        "classification": "Critical",
+        "status": "FIXED",
+        "source_file": "V3SwapRouter.sol",
+        "summary": "Here, the \"amountIn\" value is the input amount of the last swap, while \"amountInMaximum\" is the maximum input amount for the first swap, thus comparing them doesn't make make sense.",
+        "location": "lines 270-278"
+      },
+      {
+        "id": "CVF-88",
+        "classification": "Critical",
+        "status": "FIXED",
+        "source_file": "Permit2Payments.sol",
+        "summary": "Overflow is possible when converting \"amount\" to \"uint256\".",
+        "location": "lines 279-296"
+      },
+      {
+        "id": "CVF-6",
+        "classification": "Major",
+        "status": "FIXED",
+        "source_file": "V2SwapRouter.sol",
+        "summary": "This line would throw in case \"path\" has less than two elements.",
+        "location": "lines 297-310"
+      },
+      {
+        "id": "CVF-7",
+        "classification": "Major",
+        "status": "FIXED",
+        "source_file": "V2SwapRouter.sol",
+        "summary": "Underflow would be possible here unless the previous line implicitly checked the \"path\" length. Such implicit dependencies make code more error-prone.",
+        "location": "lines 311-330"
+      },
+      {
+        "id": "CVF-25",
+        "classification": "Major",
+        "status": "FIXED",
+        "source_file": "Payments.sol",
+        "summary": "These function don't handle special recipient addresses such as \"MSG_SENDER\" or \"ADDRESS_THIS\".",
+        "location": "lines 331-373"
+      },
+      {
+        "id": "CVF-31",
+        "classification": "Major",
+        "status": "FIXED",
+        "source_file": "Payments.sol",
+        "summary": "Unlike the \"sweep\" function this function treats the passed amount as an exact amount to be transferred rather than as a minimum.",
+        "location": "lines 374-393"
+      },
+      {
+        "id": "CVF-32",
+        "classification": "Major",
+        "status": "INFO",
+        "source_file": "Payments.sol",
+        "summary": "The returned value is ignored.",
+        "location": "lines 394-406"
+      },
+      {
+        "id": "CVF-57",
+        "classification": "Major",
+        "status": "FIXED",
+        "source_file": "V3SwapRouter.sol",
+        "summary": "This allocates a new bytes array and copies the remaining path into it. This is suboptimal.",
+        "location": "lines 407-417"
+      },
+      {
+        "id": "CVF-67",
+        "classification": "Major",
+        "status": "INFO",
+        "source_file": "V3Path.sol",
+        "summary": "Underflow is possible here.",
+        "location": "lines 418-437"
+      },
+      {
+        "id": "CVF-69",
+        "classification": "Major",
+        "status": "FIXED",
+        "source_file": "BytesLib.sol",
+        "summary": "These conditions may never be true, as Solidity 0.8.0+ automatically performs overflow checks.",
+        "location": "lines 438-455"
+      },
+      {
+        "id": "CVF-80",
+        "classification": "Major",
+        "status": "FIXED",
+        "source_file": "Dispatcher.sol",
+        "summary": "A linear chain of conditional statements is inefficient.",
+        "location": "lines 456-480"
+      },
+      {
+        "id": "CVF-81",
+        "classification": "Major",
+        "status": "FIXED",
+        "source_file": "Dispatcher.sol",
+        "summary": "Decoding a single bytes array from a bytes array looks like waste of gas.",
+        "location": "lines 481-503"
+      },
+      {
+        "id": "CVF-48",
+        "classification": "Moderate",
+        "status": "INFO",
+        "source_file": "RewardsCollector.sol",
+        "summary": "The returned value is ignored.",
+        "location": "lines 504-518"
+      },
+      {
+        "id": "CVF-63",
+        "classification": "Moderate",
+        "status": "FIXED",
+        "source_file": "V3Path.sol",
+        "summary": "Underflow is possible here.",
+        "location": "lines 519-529"
+      },
+      {
+        "id": "CVF-75",
+        "classification": "Moderate",
+        "status": "FIXED",
+        "source_file": "RouterCallbacks.sol",
+        "summary": "According to the EIP-165 standard, this function should return true for interfaceId=0x01ffc9a7 which is the EIP-165 interface ID.",
+        "location": "lines 530-550"
+      },
+      {
+        "id": "CVF-1",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "V2SwapRouter.sol",
+        "summary": "The type of this variable should be \"IUniswapV2Factory\".",
+        "location": "lines 551-563"
+      },
+      {
+        "id": "CVF-2",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "V2SwapRouter.sol",
+        "summary": "UPPER_CASE is normally used for constants.",
+        "location": "lines 564-576"
+      },
+      {
+        "id": "CVF-3",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "V2SwapRouter.sol",
+        "summary": "These errors could be make more useful by adding some parameters to them, such as the received and the desired amounts.",
+        "location": "lines 577-594"
+      },
+      {
+        "id": "CVF-4",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "V2SwapRouter.sol",
+        "summary": "The type of the \"v2Factory\" argument should be \"IUniswapV2Factory\".",
+        "location": "lines 595-604"
+      },
+      {
+        "id": "CVF-5",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "V2SwapRouter.sol",
+        "summary": "The type of the \"path\" argument should be \"IERC20[]\".",
+        "location": "lines 605-618"
+      },
+      {
+        "id": "CVF-8",
+        "classification": "Minor",
+        "status": "FIXED",
+        "source_file": "V2SwapRouter.sol",
+        "summary": "The expression \"path.length - 1\" is calculated on every loop iteration.",
+        "location": "lines 619-635"
+      },
+      {
+        "id": "CVF-9",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "V2SwapRouter.sol",
+        "summary": "The \"i\" variable is implicitly initialized with zero value.",
+        "location": "lines 636-646"
+      },
+      {
+        "id": "CVF-10",
+        "classification": "Minor",
+        "status": "FIXED",
+        "source_file": "V2SwapRouter.sol",
+        "summary": "The expression \"path.length - 2\" is calculated on every loop iteration.",
+        "location": "lines 647-657"
+      },
+      {
+        "id": "CVF-11",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "V2SwapRouter.sol",
+        "summary": "These lines will throw in case \"path\" is empty.",
+        "location": "lines 658-678"
+      },
+      {
+        "id": "CVF-12",
+        "classification": "Minor",
+        "status": "FIXED",
+        "source_file": "V2SwapRouter.sol",
+        "summary": "The expression \"path[path.length - 1]\" is calculated twice.",
+        "location": "lines 679-695"
+      },
+      {
+        "id": "CVF-13",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "UniswapV2Library.sol",
+        "summary": "Specifying an unbounded compiler versions range is a bad practice as one cannot guarantee compatibility with future major versions.",
+        "location": "lines 696-715"
+      },
+      {
+        "id": "CVF-14",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "UniswapV2Library.sol",
+        "summary": "The type of the \"factory\" argument should be \"IUniswapV2Factory\", the type of the \"tokenA\" and \"tokenB\" arguments should be \"IERC20\".",
+        "location": "lines 716-734"
+      },
+      {
+        "id": "CVF-15",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "UniswapV2Library.sol",
+        "summary": "The return type should be \"IUniswapV2Pair\".",
+        "location": "lines 735-745"
+      },
+      {
+        "id": "CVF-16",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "UniswapV2Library.sol",
+        "summary": "The types of the returned values should bbe \"IUniswapV2Pair\" and \"IERC20\" respectively.",
+        "location": "lines 746-760"
+      },
+      {
+        "id": "CVF-17",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "UniswapV2Library.sol",
+        "summary": "The type of the \"pair\" returned value should be \"IUniswapV2Pair\".",
+        "location": "lines 761-771"
+      },
+      {
+        "id": "CVF-18",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "UniswapV2Library.sol",
+        "summary": "The values 997 and 1000 should be named constants.",
+        "location": "lines 772-791"
+      },
+      {
+        "id": "CVF-19",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "UniswapV2Library.sol",
+        "summary": "This line seems to simulate rounding up by just incrementing the result.",
+        "location": "lines 792-810"
+      },
+      {
+        "id": "CVF-20",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "UniswapV2Library.sol",
+        "summary": "The type of the \"factory\" argument should be \"IUniswapV2Factory\". The type of the \"path\" argument should be \"IERC20[]\".",
+        "location": "lines 811-822"
+      },
+      {
+        "id": "CVF-21",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "UniswapV2Library.sol",
+        "summary": "The type of the \"pair\" returned value should be \"IUniswapV2Pair\".",
+        "location": "lines 823-833"
+      },
+      {
+        "id": "CVF-22",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "UniswapV2Library.sol",
+        "summary": "The semantics of the returned values is unclear.",
+        "location": "lines 834-853"
+      },
+      {
+        "id": "CVF-23",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "Payments.sol",
+        "summary": "These errors could be made more useful by adding some parameters to them, such as the token address, the desired token or ether balance, or the bips passed.",
+        "location": "lines 854-866"
+      },
+      {
+        "id": "CVF-24",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "Payments.sol",
+        "summary": "The type of the \"token\" argument should be \"IERC20\".",
+        "location": "lines 867-884"
+      },
+      {
+        "id": "CVF-26",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "Payments.sol",
+        "summary": "Reverting in case \"bips\" is zero looks odd.",
+        "location": "lines 885-903"
+      },
+      {
+        "id": "CVF-27",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "Payments.sol",
+        "summary": "This constant must be named.",
+        "location": "lines 904-912"
+      },
+      {
+        "id": "CVF-28",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "Payments.sol",
+        "summary": "Brackets are redundant.",
+        "location": "lines 913-923"
+      },
+      {
+        "id": "CVF-29",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "Payments.sol",
+        "summary": "The type of the \"token\" argument should be \"IERC721\".",
+        "location": "lines 924-933"
+      },
+      {
+        "id": "CVF-30",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "Payments.sol",
+        "summary": "The type of the \"token\" argument should be \"IERC1155\".",
+        "location": "lines 934-949"
+      },
+      {
+        "id": "CVF-33",
+        "classification": "Minor",
+        "status": "FIXED",
+        "source_file": "Router.sol",
+        "summary": "The type of this argument should b be \"Permit\" or an interface extracted from it.",
+        "location": "lines 950-960"
+      },
+      {
+        "id": "CVF-34",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "Router.sol",
+        "summary": "The types of these arguments could be more specific.",
+        "location": "lines 961-972"
+      },
+      {
+        "id": "CVF-35",
+        "classification": "Minor",
+        "status": "FIXED",
+        "source_file": "Router.sol",
+        "summary": "The type of this argument should be \"IERC20\".",
+        "location": "lines 973-983"
+      },
+      {
+        "id": "CVF-36",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "Router.sol",
+        "summary": "The type of this argument should be \"IUniswapV2Factory\".",
+        "location": "lines 984-1001"
+      },
+      {
+        "id": "CVF-37",
+        "classification": "Minor",
+        "status": "FIXED",
+        "source_file": "Router.sol",
+        "summary": "The type of this argument should be \"IUniswapV3Factory\".",
+        "location": "lines 1002-1010"
+      },
+      {
+        "id": "CVF-38",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "Router.sol",
+        "summary": "It is a good practice to put a comment into an empty block to explain why the block is empty.",
+        "location": "lines 1011-1021"
+      },
+      {
+        "id": "CVF-39",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "Router.sol",
+        "summary": "Having a separate arrays for command opcodes and command arguments is inefficient.",
+        "location": "lines 1022-1039"
+      },
+      {
+        "id": "CVF-41",
+        "classification": "Minor",
+        "status": "FIXED",
+        "source_file": "Router.sol",
+        "summary": "Conversion to \"uint256\" is redundant, as compiler would perform it automatically.",
+        "location": "lines 1040-1051"
+      },
+      {
+        "id": "CVF-42",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "Commands.sol",
+        "summary": "The list of commands lack flow control facilities that would significantly extend capabilities of the commands language.",
+        "location": "lines 1052-1071"
+      },
+      {
+        "id": "CVF-43",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "Commands.sol",
+        "summary": "This list of commands could be replaced by a enum for automatic numbering.",
+        "location": "lines 1072-1115"
+      },
+      {
+        "id": "CVF-44",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "RewardsCollector.sol",
+        "summary": "The compiler cversion requirement specified here is inconsistent with requirements in other files.",
+        "location": "lines 1116-1128"
+      },
+      {
+        "id": "CVF-45",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "RewardsCollector.sol",
+        "summary": "The type of these variables could be more specific.",
+        "location": "lines 1129-1140"
+      },
+      {
+        "id": "CVF-46",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "RewardsCollector.sol",
+        "summary": "The type of this variable should be \"IERC20\".",
+        "location": "lines 1141-1151"
+      },
+      {
+        "id": "CVF-47",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "RewardsCollector.sol",
+        "summary": "The argument types could be more specific, in particular, the type of the \"_looksRareToken\" should be \"IERC20\".",
+        "location": "lines 1152-1170"
+      },
+      {
+        "id": "CVF-49",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "V3SwapRouter.sol",
+        "summary": "These errors could be made more useful by adding some parameters to them.",
+        "location": "lines 1171-1184"
+      },
+      {
+        "id": "CVF-50",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "V3SwapRouter.sol",
+        "summary": "The type of these fields should be \"IERC20\".",
+        "location": "lines 1185-1196"
+      },
+      {
+        "id": "CVF-51",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "V3SwapRouter.sol",
+        "summary": "The type of this variable should be \"IUniswapV3Factory\".",
+        "location": "lines 1197-1207"
+      },
+      {
+        "id": "CVF-52",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "V3SwapRouter.sol",
+        "summary": "UPPER_CASE is normally used for constants, consider using camelCase instead.",
+        "location": "lines 1208-1225"
+      },
+      {
+        "id": "CVF-53",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "V3SwapRouter.sol",
+        "summary": "The type of the \"v3Factory\" argument should be \"IUniswapV3Factory\".",
+        "location": "lines 1226-1234"
+      },
+      {
+        "id": "CVF-55",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "V3SwapRouter.sol",
+        "summary": "This comment sounds confusing and doesn't explain anything.",
+        "location": "lines 1235-1246"
+      },
+      {
+        "id": "CVF-56",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "V3SwapRouter.sol",
+        "summary": "This function should return the actual output amount.",
+        "location": "lines 1247-1255"
+      },
+      {
+        "id": "CVF-58",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "V3SwapRouter.sol",
+        "summary": "This function should return the actual input amount consumed.",
+        "location": "lines 1256-1270"
+      },
+      {
+        "id": "CVF-59",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "V3SwapRouter.sol",
+        "summary": "Underflow is possible here.",
+        "location": "lines 1271-1284"
+      },
+      {
+        "id": "CVF-61",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "V3Path.sol",
+        "summary": "Specifying an unbouded range of compiler versions is a bad practice and one cannot guarantee compatibility with future major versions.",
+        "location": "lines 1285-1297"
+      },
+      {
+        "id": "CVF-62",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "V3Path.sol",
+        "summary": "This function doesn't check that \"path.length\" is valid.",
+        "location": "lines 1298-1317"
+      },
+      {
+        "id": "CVF-64",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "V3Path.sol",
+        "summary": "The type of the token returned values should be \"IERC20\".",
+        "location": "lines 1318-1332"
+      },
+      {
+        "id": "CVF-65",
+        "classification": "Minor",
+        "status": "FIXED",
+        "source_file": "V3Path.sol",
+        "summary": "Each of these calls perform a separate length check inside.",
+        "location": "lines 1333-1347"
+      },
+      {
+        "id": "CVF-66",
+        "classification": "Minor",
+        "status": "FIXED",
+        "source_file": "V3Path.sol",
+        "summary": "This function allocates a new array and copies data into it. Using this function to iterate through a path is inefficient.",
+        "location": "lines 1348-1367"
+      },
+      {
+        "id": "CVF-68",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "BytesLib.sol",
+        "summary": "These error could be make more useful by adding some parameters to them.",
+        "location": "lines 1368-1383"
+      },
+      {
+        "id": "CVF-70",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "BytesLib.sol",
+        "summary": "The expression \"_start + _length\" is calculated twice.",
+        "location": "lines 1384-1397"
+      },
+      {
+        "id": "CVF-71",
+        "classification": "Minor",
+        "status": "FIXED",
+        "source_file": "BytesLib.sol",
+        "summary": "The expression \"lengthmod + 0x20 * iszero(lemgthmod)\" is calculated twice.",
+        "location": "lines 1398-1422"
+      },
+      {
+        "id": "CVF-72",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "BytesLib.sol",
+        "summary": "Using the identity precompile to copy a memory range would be cheaper than copying word by word. Se the following answer for code example: https://ethereum.stackexchange.com/a/76766",
+        "location": "lines 1423-1434"
+      },
+      {
+        "id": "CVF-73",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "BytesLib.sol",
+        "summary": "Right shift would be more efficient than division.",
+        "location": "lines 1435-1446"
+      },
+      {
+        "id": "CVF-74",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "BytesLib.sol",
+        "summary": "This could be simplified as: temp\\Address := mload(add(add(_bytes, 0x14), _start)",
+        "location": "lines 1447-1458"
+      },
+      {
+        "id": "CVF-76",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "Dispatcher.sol",
+        "summary": "The type of this argument should be \"Permit2\" or an interface derived from it.",
+        "location": "lines 1459-1475"
+      },
+      {
+        "id": "CVF-77",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "Dispatcher.sol",
+        "summary": "The type of this argument should be \"IUniswapV2Factory\".",
+        "location": "lines 1476-1486"
+      },
+      {
+        "id": "CVF-78",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "Dispatcher.sol",
+        "summary": "The type of this argument should be \"IUniswapV3Factory\".",
+        "location": "lines 1487-1497"
+      },
+      {
+        "id": "CVF-79",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "Dispatcher.sol",
+        "summary": "It is a good practice to put a comment into an empty block to explain why the block is empty.",
+        "location": "lines 1498-1516"
+      },
+      {
+        "id": "CVF-82",
+        "classification": "Minor",
+        "status": "FIXED",
+        "source_file": "Dispatcher.sol",
+        "summary": "Special amount value \"CONTRACT_BALANCE\" is not handled for decoded amounts.",
+        "location": "lines 1517-1538"
+      },
+      {
+        "id": "CVF-83",
+        "classification": "Minor",
+        "status": "FIXED",
+        "source_file": "Dispatcher.sol",
+        "summary": "Special recipients \"MSG_SENDER\" and \"ADDRESS_THIS\" are not handled.",
+        "location": "lines 1539-1580"
+      },
+      {
+        "id": "CVF-84",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "Dispatcher.sol",
+        "summary": "This should be performed only when recipient != this.",
+        "location": "lines 1581-1597"
+      },
+      {
+        "id": "CVF-85",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "Permit2Payments.sol",
+        "summary": "The type of this variable should be \"Permit2\" or an interface derived from it.",
+        "location": "lines 1598-1608"
+      },
+      {
+        "id": "CVF-86",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "Permit2Payments.sol",
+        "summary": "The argument type should be \"Permit2\" or an interface derived from it.",
+        "location": "lines 1609-1626"
+      },
+      {
+        "id": "CVF-87",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "Permit2Payments.sol",
+        "summary": "The type of the \"token\" arguments should be \"IERC20\".",
+        "location": "lines 1627-1643"
+      },
+      {
+        "id": "CVF-89",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "UniswapPoolHelper.sol",
+        "summary": "This import is not used.",
+        "location": "lines 1644-1654"
+      },
+      {
+        "id": "CVF-90",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "UniswapPoolHelper.sol",
+        "summary": "The type of the \"factory\" argument should be \"IUniswapV2Factory\".",
+        "location": "lines 1655-1666"
+      },
+      {
+        "id": "CVF-91",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "UniswapPoolHelper.sol",
+        "summary": "The \"identifier\" argument should be replaced with a pair of token arguments.",
+        "location": "lines 1667-1685"
+      },
+      {
+        "id": "CVF-92",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "UniswapPoolHelper.sol",
+        "summary": "The return type should be \"IUniswapV2Pair\".",
+        "location": "lines 1686-1694"
+      },
+      {
+        "id": "CVF-93",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "UniswapPoolHelper.sol",
+        "summary": "The type of arguments and returned values should be \"IERC20\".",
+        "location": "lines 1695-1704"
+      },
+      {
+        "id": "CVF-94",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "Constants.sol",
+        "summary": "The type of this constant should be \"IERC20\".",
+        "location": "lines 1705-1713"
+      },
+      {
+        "id": "CVF-95",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "Constants.sol",
+        "summary": "These constants could be turned into immutable variables by turning this library into an abstract contract.",
+        "location": "lines 1714-1729"
+      },
+      {
+        "id": "CVF-96",
+        "classification": "Minor",
+        "status": "FIXED",
+        "source_file": "Constants.sol",
+        "summary": "The type of this constant should be \"IWETH9\".",
+        "location": "lines 1730-1741"
+      },
+      {
+        "id": "CVF-97",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "IRouter.sol",
+        "summary": "These errors could be make more usefule by adding some parameters to them.",
+        "location": "lines 1742-1756"
+      },
+      {
+        "id": "CVF-98",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "IRewardsCollector.sol",
+        "summary": "The return types couyld be more specific.",
+        "location": "lines 1757-1768"
+      },
+      {
+        "id": "CVF-99",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "IRewardsCollector.sol",
+        "summary": "The return type should be \"IERC20\".",
+        "location": "lines 1769-1785"
+      },
+      {
+        "id": "CVF-100",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "IRewardsCollector.sol",
+        "summary": "This function should return the rewards amount claimed.",
+        "location": "lines 1786-1794"
+      },
+      {
+        "id": "CVF-101",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "ICryptoPunksMarket.sol",
+        "summary": "This version requirement is inconsistent with version requirements in other files.",
+        "location": "lines 1795-1805"
+      },
+      {
+        "id": "CVF-102",
+        "classification": "Minor",
+        "status": "INFO",
+        "source_file": "IWETH9.sol",
+        "summary": "The argument is not documented.",
+        "location": "lines 1806-1848"
+      }
+    ]
+  },
+  {
+    "report_id": "abdk-v4-periphery-ur-2024",
+    "title": "ABDK v4-periphery and Universal Router draft (2024)",
+    "path": "context/DRAFT_ABDK_audit_periphery_universal_router.md",
+    "copies": [
+      "context/DRAFT_ABDK_audit_periphery_universal_router.pdf",
+      "context/derived/Uniswap__universal-router/audit/DRAFT_ABDK_audit_periphery_universal_router.md",
+      "context/derived/Uniswap__v4-periphery/audits/DRAFT_ABDK_audit_periphery_universal_router.md",
+      "Uniswap__universal-router/audit/DRAFT_ABDK_audit_periphery_universal_router.pdf",
+      "Uniswap__v4-periphery/audits/DRAFT_ABDK_audit_periphery_universal_router.pdf"
+    ],
+    "declared_findings": 109,
+    "indexed_findings": 109,
+    "issues": [
+      {
+        "id": "CVF-1",
+        "classification": "Major",
+        "status": "Reported",
+        "source_file": "SlippageCheck.sol",
+        "summary": "Underflow is possible when converting \"int128\" to \"uint128\".",
+        "location": "lines 301-319"
+      },
+      {
+        "id": "CVF-2",
+        "classification": "Major",
+        "status": "Reported",
+        "source_file": "Locker.sol",
+        "summary": "Solidity permits junk in unused bits of narrow types.",
+        "location": "lines 320-332"
+      },
+      {
+        "id": "CVF-3",
+        "classification": "Major",
+        "status": "Reported",
+        "source_file": "Lock.sol",
+        "summary": "There is no check to ensure \"msg.value\" isn't zero, while zero address has a special meaning of \"not locked\".",
+        "location": "lines 333-351"
+      },
+      {
+        "id": "CVF-4",
+        "classification": "Major",
+        "status": "Reported",
+        "source_file": "Dispatcher.sol",
+        "summary": "This isn't enforced.",
+        "location": "lines 352-372"
+      },
+      {
+        "id": "CVF-5",
+        "classification": "Moderate",
+        "status": "Reported",
+        "source_file": "CalldataDecoder.sol",
+        "summary": "There is no check to ensure \"actions\" is within \"bytes\".",
+        "location": "lines 373-389"
+      },
+      {
+        "id": "CVF-6",
+        "classification": "Moderate",
+        "status": "Reported",
+        "source_file": "CalldataDecoder.sol",
+        "summary": "Underflow is possible here.",
+        "location": "lines 390-406"
+      },
+      {
+        "id": "CVF-7",
+        "classification": "Moderate",
+        "status": "Reported",
+        "source_file": "CalldataDecoder.sol",
+        "summary": "Overflow is possible here.",
+        "location": "lines 407-426"
+      },
+      {
+        "id": "CVF-8",
+        "classification": "Moderate",
+        "status": "Reported",
+        "source_file": "CalldataDecoder.sol",
+        "summary": "There are no checks to ensure \"swapParams\" are within \"params\".",
+        "location": "lines 427-442"
+      },
+      {
+        "id": "CVF-9",
+        "classification": "Moderate",
+        "status": "Reported",
+        "source_file": "PoolTicksCounter.sol",
+        "summary": "In other words, we don't want to count the lowest of tickBefore and tickAfter, but we do want to count the highest of them.",
+        "location": "lines 443-464"
+      },
+      {
+        "id": "CVF-10",
+        "classification": "Moderate",
+        "status": "Reported",
+        "source_file": "PoolTicksCounter.sol",
+        "summary": "The mask logic is only needed only on the first and last iteration. Performing it on every iteration is inefficient.",
+        "location": "lines 465-487"
+      },
+      {
+        "id": "CVF-11",
+        "classification": "Moderate",
+        "status": "Reported",
+        "source_file": "PoolTicksCounter.sol",
+        "summary": "This function is inefficient.",
+        "location": "lines 488-505"
+      },
+      {
+        "id": "CVF-12",
+        "classification": "Moderate",
+        "status": "Reported",
+        "source_file": "IMulticall_v4.sol",
+        "summary": "It is unclear how a method could known whether it is called from \"multicall\".",
+        "location": "lines 506-519"
+      },
+      {
+        "id": "CVF-13",
+        "classification": "Moderate",
+        "status": "Reported",
+        "source_file": "DeltaResolver.sol",
+        "summary": "This should be surrounded with an \"unchecked\" block to save gas and to support the -(2^255) value.",
+        "location": "lines 520-530"
+      },
+      {
+        "id": "CVF-14",
+        "classification": "Moderate",
+        "status": "Reported",
+        "source_file": "ERC721Permit_v4.sol",
+        "summary": "Such TODOs are quite dangerous.",
+        "location": "lines 531-554"
+      },
+      {
+        "id": "CVF-15",
+        "classification": "Moderate",
+        "status": "Reported",
+        "source_file": "Multicall_v4.sol",
+        "summary": "This function is payable, but there is no clear way to distribute the ether, provided along with the call among subcalls.",
+        "location": "lines 555-568"
+      },
+      {
+        "id": "CVF-16",
+        "classification": "Moderate",
+        "status": "Reported",
+        "source_file": "Multicall_v4.sol",
+        "summary": "Error message emitted here doesn't include if index of the failed subcallm which could make problem investigations harder.",
+        "location": "lines 569-581"
+      },
+      {
+        "id": "CVF-17",
+        "classification": "Moderate",
+        "status": "Reported",
+        "source_file": "Notifier.sol",
+        "summary": "There is no check to ensure \"_subscriber\" is not zero, i.e. that a subscription for given token actually exists.",
+        "location": "lines 582-599"
+      },
+      {
+        "id": "CVF-18",
+        "classification": "Moderate",
+        "status": "Reported",
+        "source_file": "ReentrancyLock.sol",
+        "summary": "This cannot properly handle situation when \"msg.sender\" is zero. While this is very unlikely at the current time, future Ethereum updates could make this possible.",
+        "location": "lines 600-612"
+      },
+      {
+        "id": "CVF-19",
+        "classification": "Moderate",
+        "status": "Reported",
+        "source_file": "PositionManager.sol",
+        "summary": "There is no \"_beforeModify\" function anywhere around, nor calls to it.",
+        "location": "lines 613-626"
+      },
+      {
+        "id": "CVF-20",
+        "classification": "Moderate",
+        "status": "Reported",
+        "source_file": "Lock.sol",
+        "summary": "According to Solidity documentation (https://docs.solidity-lang.org/en/v0.8.26/contracts.html#modifiers): \"The `_` symbol can appear in the modifier multiple times. Each occurrence is replaced with the function body, and the function returns the return value of the final occurrence.\" So using \"`_`\" twice in a modifier effectively duplicates the function code.",
+        "location": "lines 627-651"
+      },
+      {
+        "id": "CVF-21",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "PositionConfig.sol",
+        "summary": "Consider specifying as \"^0.8.0\" unless there is something special regarding this particular version.",
+        "location": "lines 652-664"
+      },
+      {
+        "id": "CVF-22",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "PositionConfig.sol",
+        "summary": "Declaring a top-level structure in a file named after a library makes it harder navigating through code.",
+        "location": "lines 665-683"
+      },
+      {
+        "id": "CVF-23",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "PositionConfig.sol",
+        "summary": "Is the assembly block below really significantly more efficient than the hash expression in this comment?",
+        "location": "lines 684-697"
+      },
+      {
+        "id": "CVF-24",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "PositionConfig.sol",
+        "summary": "This code is redundant, as Solidity permits junk in free memory https://docs.soliditylang.org/en/v0.8.26/internals/layout_in_memory.html",
+        "location": "lines 698-715"
+      },
+      {
+        "id": "CVF-25",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "PathKey.sol",
+        "summary": "This version requirement is inconsistent with other files in this code base.",
+        "location": "lines 716-734"
+      },
+      {
+        "id": "CVF-26",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "PathKey.sol",
+        "summary": "Declaring a top-level structure in a file named after a library makes it harder navigating through code.",
+        "location": "lines 735-747"
+      },
+      {
+        "id": "CVF-27",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "CalldataDecoder.sol",
+        "summary": "This version requirement is inconsistent with other files in this code base.",
+        "location": "lines 748-760"
+      },
+      {
+        "id": "CVF-28",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "CalldataDecoder.sol",
+        "summary": "This error could be made more useful by adding certain parameters into it.",
+        "location": "lines 761-771"
+      },
+      {
+        "id": "CVF-29",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "Actions.sol",
+        "summary": "This library could be turned into a enum.",
+        "location": "lines 772-788"
+      },
+      {
+        "id": "CVF-30",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "ActionConstants.sol",
+        "summary": "This version requirement is inconsistent with other files in this code base.",
+        "location": "lines 789-801"
+      },
+      {
+        "id": "CVF-31",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "ActionConstants.sol",
+        "summary": "This comment is useless, as it just describes the constant value.",
+        "location": "lines 802-815"
+      },
+      {
+        "id": "CVF-32",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "ERC721PermitHash.sol",
+        "summary": "Solidity compiler is smart enough to precompute constant hash expressions.",
+        "location": "lines 816-843"
+      },
+      {
+        "id": "CVF-33",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "BipsLibrary.sol",
+        "summary": "This version requirement is inconsistent with other files in this code base.",
+        "location": "lines 844-856"
+      },
+      {
+        "id": "CVF-34",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "BipsLibrary.sol",
+        "summary": "This error could be made more useful by adding certain parameters into it.",
+        "location": "lines 857-867"
+      },
+      {
+        "id": "CVF-35",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "BipsLibrary.sol",
+        "summary": "Brackets around multiplication are redundant.",
+        "location": "lines 868-878"
+      },
+      {
+        "id": "CVF-36",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "BipsLibrary.sol",
+        "summary": "Phantom overflow is possible here, i.e. a situation when the final calculation result would fit into the destination type, while some intermediary calculation overflows.",
+        "location": "lines 879-898"
+      },
+      {
+        "id": "CVF-37",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "Locker.sol",
+        "summary": "Solidity compiler is smart enough to precompute constant hash expressions.",
+        "location": "lines 899-914"
+      },
+      {
+        "id": "CVF-38",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "PoolTicksCounter.sol",
+        "summary": "This version requirement is inconsistent with other files in this code base.",
+        "location": "lines 915-927"
+      },
+      {
+        "id": "CVF-39",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "PoolTicksCounter.sol",
+        "summary": "The value \"tickBefore / key.tickSpacing\" is calculated twice.",
+        "location": "lines 928-947"
+      },
+      {
+        "id": "CVF-40",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "PoolTicksCounter.sol",
+        "summary": "Bitwise \"AND\" would be more efficient than reminder operator.",
+        "location": "lines 948-963"
+      },
+      {
+        "id": "CVF-41",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "PoolTicksCounter.sol",
+        "summary": "The value \"tickAfter / key.tickSpacing\" is calculated twice.",
+        "location": "lines 964-978"
+      },
+      {
+        "id": "CVF-42",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "SafeCast.sol",
+        "summary": "This version requirement is inconsistent with other files in this code base.",
+        "location": "lines 979-998"
+      },
+      {
+        "id": "CVF-43",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "SafeCast.sol",
+        "summary": "Such TODOs are quite dangerous.",
+        "location": "lines 999-1009"
+      },
+      {
+        "id": "CVF-44",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "SafeCast.sol",
+        "summary": "The library name doesn't match the file name.",
+        "location": "lines 1010-1020"
+      },
+      {
+        "id": "CVF-45",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "SlippageCheck.sol",
+        "summary": "This version requirement is inconsistent with other files in this code base.",
+        "location": "lines 1021-1031"
+      },
+      {
+        "id": "CVF-46",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "SlippageCheck.sol",
+        "summary": "The library name doesn't match the file name.",
+        "location": "lines 1032-1049"
+      },
+      {
+        "id": "CVF-47",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "SlippageCheck.sol",
+        "summary": "These errors could be made more useful be adding certain parameters into them.",
+        "location": "lines 1050-1061"
+      },
+      {
+        "id": "CVF-48",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "SlippageCheck.sol",
+        "summary": "The expressions \"delta.amount0()\" and \"delta.amount1()\" are are calculated twice.",
+        "location": "lines 1062-1075"
+      },
+      {
+        "id": "CVF-49",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "Quoter.sol",
+        "summary": "This version requirement is inconsistent with other files in this code base.",
+        "location": "lines 1076-1088"
+      },
+      {
+        "id": "CVF-50",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "Quoter.sol",
+        "summary": "This import should be grouped together with other Uniswap imports.",
+        "location": "lines 1089-1106"
+      },
+      {
+        "id": "CVF-51",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "Quoter.sol",
+        "summary": "It is a good practice to put a comment into an empty block to explain why the block is empty.",
+        "location": "lines 1107-1117"
+      },
+      {
+        "id": "CVF-52",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "Quoter.sol",
+        "summary": "Just assign \"params.exactAmount\" to \"cache.prevAmount\" before the loop, to make this ternary operator unnecessary.",
+        "location": "lines 1118-1128"
+      },
+      {
+        "id": "CVF-53",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "IV4Router.sol",
+        "summary": "This version requirement is inconsistent with other files in this code base.",
+        "location": "lines 1129-1141"
+      },
+      {
+        "id": "CVF-54",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "IV4Router.sol",
+        "summary": "These errors could be made more useful by adding certain parameters into them.",
+        "location": "lines 1142-1163"
+      },
+      {
+        "id": "CVF-55",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "IEIP712_v4.sol",
+        "summary": "This version requirement is inconsistent with other files in this code base.",
+        "location": "lines 1164-1176"
+      },
+      {
+        "id": "CVF-56",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "IMulticall_v4.sol",
+        "summary": "This version requirement is inconsistent with other files in this code base.",
+        "location": "lines 1177-1189"
+      },
+      {
+        "id": "CVF-57",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "IPositionManager.sol",
+        "summary": "This error could be made more useful by adding certain parameters into it.",
+        "location": "lines 1190-1200"
+      },
+      {
+        "id": "CVF-58",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "IERC721Permit_v4.sol",
+        "summary": "Specifying a compiler version range without an upper bound is a bad practice, as it is impossible to guarantee compatibility with future major releases.",
+        "location": "lines 1201-1219"
+      },
+      {
+        "id": "CVF-59",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "IERC721Permit_v4.sol",
+        "summary": "This version requirement is inconsistent with other files in this code base.",
+        "location": "lines 1220-1232"
+      },
+      {
+        "id": "CVF-60",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "IQuoter.sol",
+        "summary": "This version requirement is inconsistent with other files in this code base.",
+        "location": "lines 1233-1245"
+      },
+      {
+        "id": "CVF-61",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "IQuoter.sol",
+        "summary": "These errors could be made more useful by adding certain parameters into them.",
+        "location": "lines 1246-1265"
+      },
+      {
+        "id": "CVF-62",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "IQuoter.sol",
+        "summary": "It would be more efficient to return a single array of structs with three fields, rather than three parallel arrays.",
+        "location": "lines 1266-1284"
+      },
+      {
+        "id": "CVF-63",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "ImmutableState.sol",
+        "summary": "This version requirement is inconsistent with other files in this code base.",
+        "location": "lines 1285-1297"
+      },
+      {
+        "id": "CVF-64",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "SafeCallback.sol",
+        "summary": "It is a good practice to put a comment into an empty block to explain why the block is empty.",
+        "location": "lines 1298-1316"
+      },
+      {
+        "id": "CVF-65",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "SafeCallback.sol",
+        "summary": "The \"by\" preposition looks redundant here, as \"onlyPoolManager\" would sound more conventional.",
+        "location": "lines 1317-1327"
+      },
+      {
+        "id": "CVF-66",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "BaseActionsRouter.sol",
+        "summary": "This error could be made more useful by adding certain parameters into it.",
+        "location": "lines 1328-1338"
+      },
+      {
+        "id": "CVF-67",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "BaseActionsRouter.sol",
+        "summary": "It is a good practice to put a comment into an empty block to explain why the block is empty.",
+        "location": "lines 1339-1349"
+      },
+      {
+        "id": "CVF-68",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "BaseActionsRouter.sol",
+        "summary": "Explicit conversion to \"uint256\" is redundant.",
+        "location": "lines 1350-1366"
+      },
+      {
+        "id": "CVF-69",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "DeltaResolver.sol",
+        "summary": "Should be \"else return\".",
+        "location": "lines 1367-1385"
+      },
+      {
+        "id": "CVF-70",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "EIP712_v4.sol",
+        "summary": "This version requirement is inconsistent with other files in this code base.",
+        "location": "lines 1386-1398"
+      },
+      {
+        "id": "CVF-71",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "EIP712_v4.sol",
+        "summary": "Solidity compiler is smart enough to precompute constant hash expressions.",
+        "location": "lines 1399-1420"
+      },
+      {
+        "id": "CVF-72",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "ERC721Permit_v4.sol",
+        "summary": "We didn't review this file.",
+        "location": "lines 1421-1431"
+      },
+      {
+        "id": "CVF-73",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "ERC721Permit_v4.sol",
+        "summary": "It is a good practice to put a comment into an empty block to explain why the block is empty.",
+        "location": "lines 1432-1443"
+      },
+      {
+        "id": "CVF-74",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "ERC721Permit_v4.sol",
+        "summary": "It is unclear what this comment is about.",
+        "location": "lines 1444-1456"
+      },
+      {
+        "id": "CVF-75",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "ERC721Permit_v4.sol",
+        "summary": "This function is too simple to be extracted.",
+        "location": "lines 1457-1477"
+      },
+      {
+        "id": "CVF-76",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "Multicall_v4.sol",
+        "summary": "This version requirement is inconsistent with other files in this code base.",
+        "location": "lines 1478-1490"
+      },
+      {
+        "id": "CVF-77",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "Notifier.sol",
+        "summary": "This TODO should be resolved or removed.",
+        "location": "lines 1491-1502"
+      },
+      {
+        "id": "CVF-78",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "Notifier.sol",
+        "summary": "This error could be made more useful by adding the token ID as a parameter.",
+        "location": "lines 1503-1513"
+      },
+      {
+        "id": "CVF-79",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "Notifier.sol",
+        "summary": "The parameters of these events should be indexed.",
+        "location": "lines 1514-1531"
+      },
+      {
+        "id": "CVF-80",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "Notifier.sol",
+        "summary": "Events are usually named via nouns, such as \"Subscription\" or \"Un-subscription\".",
+        "location": "lines 1532-1543"
+      },
+      {
+        "id": "CVF-81",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "Notifier.sol",
+        "summary": "This value could be rendered as \"0.01e4\".",
+        "location": "lines 1544-1554"
+      },
+      {
+        "id": "CVF-82",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "Notifier.sol",
+        "summary": "The type for the \"newSubscriber\" argument should be \"ISubscriber\".",
+        "location": "lines 1555-1571"
+      },
+      {
+        "id": "CVF-83",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "Notifier.sol",
+        "summary": "It is a good practice to put a comment into an empty block to explain why the block is empty.",
+        "location": "lines 1572-1597"
+      },
+      {
+        "id": "CVF-84",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "Notifier.sol",
+        "summary": "This event is emitted even if there were no subscription.",
+        "location": "lines 1598-1608"
+      },
+      {
+        "id": "CVF-85",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "PoolInitializer.sol",
+        "summary": "The semantics of the returned values is unclear.",
+        "location": "lines 1609-1627"
+      },
+      {
+        "id": "CVF-86",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "V4Router.sol",
+        "summary": "This version requirement is inconsistent with other files in this code base.",
+        "location": "lines 1628-1640"
+      },
+      {
+        "id": "CVF-87",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "V4Router.sol",
+        "summary": "It is a good practice to put a comment into an empty block to explain why the block is empty.",
+        "location": "lines 1641-1652"
+      },
+      {
+        "id": "CVF-88",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "PositionManager.sol",
+        "summary": "We didn't review these files.",
+        "location": "lines 1653-1665"
+      },
+      {
+        "id": "CVF-89",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "PositionManager.sol",
+        "summary": "This variable doesn't need to be public.",
+        "location": "lines 1666-1683"
+      },
+      {
+        "id": "CVF-90",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "PositionManager.sol",
+        "summary": "It is a good practice to put a comment into an empty bloc to explain why the block is empty.",
+        "location": "lines 1684-1694"
+      },
+      {
+        "id": "CVF-91",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "PositionManager.sol",
+        "summary": "When called not under lock, this function silently returns zero address.",
+        "location": "lines 1695-1709"
+      },
+      {
+        "id": "CVF-92",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "PositionManager.sol",
+        "summary": "This function should return the minted token ID.",
+        "location": "lines 1710-1720"
+      },
+      {
+        "id": "CVF-93",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "PositionManager.sol",
+        "summary": "The type conversion is redundant here, as Solidity compiler would anyway do it automatically.",
+        "location": "lines 1721-1737"
+      },
+      {
+        "id": "CVF-94",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "PositionManager.sol",
+        "summary": "The comment doesn't add any information.",
+        "location": "lines 1738-1751"
+      },
+      {
+        "id": "CVF-95",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "PositionManager.sol",
+        "summary": "This TODO should be either resolved or removed.",
+        "location": "lines 1752-1763"
+      },
+      {
+        "id": "CVF-96",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "V4SwapRouter.sol",
+        "summary": "We didn't review these files.",
+        "location": "lines 1764-1775"
+      },
+      {
+        "id": "CVF-97",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "V4SwapRouter.sol",
+        "summary": "The argument type should be \"IPoolManager\".",
+        "location": "lines 1776-1793"
+      },
+      {
+        "id": "CVF-98",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "MigratorImmutables.sol",
+        "summary": "Declaring a top-level struct in a file named after a contract makes it harder navigating through code.",
+        "location": "lines 1794-1806"
+      },
+      {
+        "id": "CVF-99",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "MigratorImmutables.sol",
+        "summary": "The type for this field should be \"INonfungiblePositionManager\".",
+        "location": "lines 1807-1817"
+      },
+      {
+        "id": "CVF-100",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "MigratorImmutables.sol",
+        "summary": "The type for this field should be \"IPositionManager\".",
+        "location": "lines 1818-1828"
+      },
+      {
+        "id": "CVF-101",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "Locker.sol",
+        "summary": "Solidity compiler is smart enough to precompute constant hash expressions.",
+        "location": "lines 1829-1849"
+      },
+      {
+        "id": "CVF-102",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "Callbacks.sol",
+        "summary": "This contract actually implements functionality defined by a particular ERC, namely ERC-165.",
+        "location": "lines 1850-1866"
+      },
+      {
+        "id": "CVF-103",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "Dispatcher.sol",
+        "summary": "We didn't review these files.",
+        "location": "lines 1867-1889"
+      },
+      {
+        "id": "CVF-104",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "Dispatcher.sol",
+        "summary": "This file could be imported as \"./Callbacks.sol\".",
+        "location": "lines 1890-1906"
+      },
+      {
+        "id": "CVF-105",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "Dispatcher.sol",
+        "summary": "Conversion from \"bytes1\" to \"uint8\" involves a shift operation.",
+        "location": "lines 1907-1917"
+      },
+      {
+        "id": "CVF-106",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "Dispatcher.sol",
+        "summary": "Indentation doesn't suggest, that the comment belongs to the \"else\" statement below.",
+        "location": "lines 1918-1938"
+      },
+      {
+        "id": "CVF-107",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "Dispatcher.sol",
+        "summary": "This check should be done earlier, before obtaining the token ID.",
+        "location": "lines 1939-1952"
+      },
+      {
+        "id": "CVF-108",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "UniversalRouter.sol",
+        "summary": "We didn't review these files.",
+        "location": "lines 1953-1972"
+      },
+      {
+        "id": "CVF-109",
+        "classification": "Minor",
+        "status": "Reported",
+        "source_file": "UniversalRouter.sol",
+        "summary": "It is a good practice to put a comment into an empty block to explain why the block is empty.",
+        "location": "lines 1973-2012"
+      }
+    ]
+  },
+  {
+    "report_id": "spearbit-ur-2024",
+    "title": "Spearbit Universal Router draft (2024)",
+    "path": "context/derived/Uniswap__universal-router/audit/DRAFT_Spearbit_audit_UR.md",
+    "copies": [
+      "Uniswap__universal-router/audit/DRAFT_Spearbit_audit_UR.pdf"
+    ],
+    "declared_findings": 6,
+    "indexed_findings": 6,
+    "issues": [
+      {
+        "id": "5.1.1",
+        "classification": "Medium",
+        "title": "`UniversalRouter` doesn't support incoming native token transfers from `poolManager`",
+        "location": "lines 192-202"
+      },
+      {
+        "id": "5.2.1",
+        "classification": "Low",
+        "title": "`Callbacks` contract can be removed",
+        "location": "lines 203-231"
+      },
+      {
+        "id": "5.2.2",
+        "classification": "Low",
+        "title": "Comment Improvements",
+        "location": "lines 232-256"
+      },
+      {
+        "id": "5.2.3",
+        "classification": "Low",
+        "title": "Missing NatSpec comments affect readability",
+        "location": "lines 257-278"
+      },
+      {
+        "id": "5.2.4",
+        "classification": "Low",
+        "title": "Unused code should be removed",
+        "location": "lines 279-304"
+      },
+      {
+        "id": "5.2.5",
+        "classification": "Low",
+        "title": "Use `abi.encodeCall` whenever possible",
+        "location": "lines 305-323"
+      }
+    ]
+  },
+  {
+    "report_id": "openzeppelin-v4-periphery-ur-2024",
+    "title": "OpenZeppelin v4 Periphery and Universal Router (2024)",
+    "path": "context/derived/Uniswap__universal-router/audit/OpenZeppelin_audit_periphery_universal_router.md",
+    "copies": [
+      "context/derived/Uniswap__v4-periphery/audits/OpenZeppelin_audit_periphery_universal_router.md",
+      "Uniswap__universal-router/audit/OpenZeppelin_audit_periphery_universal_router.pdf",
+      "Uniswap__v4-periphery/audits/OpenZeppelin_audit_periphery_universal_router.pdf"
+    ],
+    "declared_findings": 38,
+    "indexed_findings": 38,
+    "issues": [
+      {
+        "id": "C-01",
+        "classification": "Critical",
+        "title": "Accrued Fees Can Be Stolen",
+        "location": "lines 227-245"
+      },
+      {
+        "id": "H-01",
+        "classification": "Critical",
+        "title": "Slippage Checks Are Not Enforced When Fees Accrued Exceed Tokens Required for a Liquidity Deposit",
+        "location": "lines 246-267"
+      },
+      {
+        "id": "M-01",
+        "classification": "Medium",
+        "title": "Universal Router Does Not Forward Native Tokens to V4 Position Manager",
+        "location": "lines 268-280"
+      },
+      {
+        "id": "M-02",
+        "classification": "Medium",
+        "title": "Slippage Check Can Be Bypassed With Unsafe Cast",
+        "location": "lines 281-292"
+      },
+      {
+        "id": "L-01",
+        "classification": "Low",
+        "title": "ERC-721 Permit Signatures Cannot Be Revoked",
+        "location": "lines 293-307"
+      },
+      {
+        "id": "L-02",
+        "classification": "Low",
+        "title": "Incorrect Decoding of bytes[] params Calldata Length",
+        "location": "lines 308-315"
+      },
+      {
+        "id": "L-03",
+        "classification": "Low",
+        "title": "Shadowed State Variable",
+        "location": "lines 316-325"
+      },
+      {
+        "id": "L-04",
+        "classification": "Low",
+        "title": "Checks-Effects-Interactions Pattern Not Followed for Unsubscribe Logic",
+        "location": "lines 326-341"
+      },
+      {
+        "id": "L-05",
+        "classification": "Low",
+        "title": "Unreachable Branch in `_mapInputAmount`",
+        "location": "lines 342-349"
+      },
+      {
+        "id": "L-06",
+        "classification": "Low",
+        "title": "Permit2 Signatures Could Be Front-Run to Temporarily Prevent Execution",
+        "location": "lines 350-357"
+      },
+      {
+        "id": "L-07",
+        "classification": "Low",
+        "title": "Burning a Position Notifies the Subscriber But Does Not Unsubscribe Them",
+        "location": "lines 358-372"
+      },
+      {
+        "id": "L-08",
+        "classification": "Low",
+        "title": "Misleading Documentation",
+        "location": "lines 373-394"
+      },
+      {
+        "id": "L-09",
+        "classification": "Low",
+        "title": "Unsafe ABI Encoding",
+        "location": "lines 395-411"
+      },
+      {
+        "id": "L-10",
+        "classification": "Low",
+        "title": "`try-catch` Block Can Still Revert",
+        "location": "lines 412-430"
+      },
+      {
+        "id": "L-11",
+        "classification": "Low",
+        "title": "Discrepancies Between Interfaces and Implementation Contracts",
+        "location": "lines 431-445"
+      },
+      {
+        "id": "L-12",
+        "classification": "Low",
+        "title": "Missing Zero-Address Checks",
+        "location": "lines 446-465"
+      },
+      {
+        "id": "L-13",
+        "classification": "Low",
+        "title": "Missing Docstrings",
+        "location": "lines 466-502"
+      },
+      {
+        "id": "N-01",
+        "classification": "Notes & Additional Information",
+        "title": "Unimplemented Actions",
+        "location": "lines 503-514"
+      },
+      {
+        "id": "N-02",
+        "classification": "Notes & Additional Information",
+        "title": "Negation of `int256` May Overflow",
+        "location": "lines 515-530"
+      },
+      {
+        "id": "N-03",
+        "classification": "Notes & Additional Information",
+        "title": "Duplicate Imports",
+        "location": "lines 531-541"
+      },
+      {
+        "id": "N-04",
+        "classification": "Notes & Additional Information",
+        "title": "Unnecessary Cast",
+        "location": "lines 542-549"
+      },
+      {
+        "id": "N-05",
+        "classification": "Notes & Additional Information",
+        "title": "File and Library Names Mismatch",
+        "location": "lines 550-569"
+      },
+      {
+        "id": "N-06",
+        "classification": "Notes & Additional Information",
+        "title": "Unnecessary Unchecked Block",
+        "location": "lines 570-577"
+      },
+      {
+        "id": "N-07",
+        "classification": "Notes & Additional Information",
+        "title": "Lack of Security Contact",
+        "location": "lines 578-585"
+      },
+      {
+        "id": "N-08",
+        "classification": "Notes & Additional Information",
+        "title": "Unused Imports",
+        "location": "lines 586-602"
+      },
+      {
+        "id": "N-09",
+        "classification": "Notes & Additional Information",
+        "title": "Incomplete Docstrings",
+        "location": "lines 603-614"
+      },
+      {
+        "id": "N-10",
+        "classification": "Notes & Additional Information",
+        "title": "Todo Comments in the Code",
+        "location": "lines 615-638"
+      },
+      {
+        "id": "N-11",
+        "classification": "Notes & Additional Information",
+        "title": "Inconsistent Function Order Within Contracts",
+        "location": "lines 639-667"
+      },
+      {
+        "id": "N-12",
+        "classification": "Notes & Additional Information",
+        "title": "Lack of Indexed Event Parameters",
+        "location": "lines 668-678"
+      },
+      {
+        "id": "N-13",
+        "classification": "Notes & Additional Information",
+        "title": "Unused Struct",
+        "location": "lines 679-688"
+      },
+      {
+        "id": "N-14",
+        "classification": "Notes & Additional Information",
+        "title": "Unnecessary Return Value",
+        "location": "lines 689-708"
+      },
+      {
+        "id": "N-15",
+        "classification": "Notes & Additional Information",
+        "title": "Inconsistent Use of Multiple Solidity Versions",
+        "location": "lines 709-722"
+      },
+      {
+        "id": "N-16",
+        "classification": "Notes & Additional Information",
+        "title": "Typographical Errors",
+        "location": "lines 723-740"
+      },
+      {
+        "id": "N-17",
+        "classification": "Notes & Additional Information",
+        "title": "Function Visibility Overly Permissive",
+        "location": "lines 741-752"
+      },
+      {
+        "id": "N-18",
+        "classification": "Notes & Additional Information",
+        "title": "Using Directive Could Be Global",
+        "location": "lines 753-768"
+      },
+      {
+        "id": "N-19",
+        "classification": "Notes & Additional Information",
+        "title": "ERC-721 Permit Could Be Front-Run To Temporarily Prevent Execution",
+        "location": "lines 769-776"
+      },
+      {
+        "id": "N-20",
+        "classification": "Notes & Additional Information",
+        "title": "Gas Optimizations",
+        "location": "lines 777-800"
+      },
+      {
+        "id": "CR-01",
+        "classification": "Notes & Additional Information",
+        "title": "Universal Router Does Not Accept Native Tokens",
+        "location": "lines 801-826"
+      }
+    ]
+  },
+  {
+    "report_id": "openzeppelin-ur-2-1-2025",
+    "title": "OpenZeppelin Universal Router 2.1 and v4 Periphery (2025)",
+    "path": "context/derived/Uniswap__universal-router/audit/Universal Router 2.1 And V4 Periphery Audit.md",
+    "copies": [
+      "Uniswap__universal-router/audit/Universal Router 2.1 And V4 Periphery Audit.pdf"
+    ],
+    "declared_findings": 2,
+    "indexed_findings": 2,
+    "issues": [
+      {
+        "id": "L-01",
+        "classification": "Low",
+        "title": "UniversalRouter May Grant Allowance to Arbitrary Address",
+        "location": "lines 118-129"
+      },
+      {
+        "id": "N-01",
+        "classification": "Notes & Additional Information",
+        "title": "Missing Named Parameters in Mapping",
+        "location": "lines 130-161"
+      }
+    ]
+  },
+  {
+    "report_id": "openzeppelin-swap-proxy-2026",
+    "title": "OpenZeppelin Universal Router SwapProxy and Periphery (2026)",
+    "path": "context/derived/Uniswap__universal-router/audit/Universal Router SwapProxy And Periphery Audit.md",
+    "copies": [
+      "Uniswap__universal-router/audit/Universal Router SwapProxy And Periphery Audit.pdf"
+    ],
+    "declared_findings": 17,
+    "indexed_findings": 17,
+    "issues": [
+      {
+        "id": "M-01",
+        "classification": "Medium",
+        "title": "Incorrect Bounds Check in `toLengthOffset` May Disable Per-Hop Slippage Protection",
+        "location": "lines 191-202"
+      },
+      {
+        "id": "M-02",
+        "classification": "Medium",
+        "title": "Division by Zero in Exact-Output Swaps Panics on Hook-Subsidized Pools",
+        "location": "lines 203-219"
+      },
+      {
+        "id": "L-01",
+        "classification": "Low",
+        "title": "SwapProxy's Execute Function Requires ERC-20 Address for ETH-Only Calls",
+        "location": "lines 220-227"
+      },
+      {
+        "id": "L-02",
+        "classification": "Low",
+        "title": "Solmate SafeTransferLib Silently Succeeds on Non-Contract Token Addresses",
+        "location": "lines 228-240"
+      },
+      {
+        "id": "L-03",
+        "classification": "Low",
+        "title": "Non-Mint Action Streams Allowed in V4_POSITION_MANAGER_CALL",
+        "location": "lines 241-255"
+      },
+      {
+        "id": "L-04",
+        "classification": "Low",
+        "title": "Unnecessary Price Calculations When `maxHopSlippage` Is Not Set",
+        "location": "lines 256-263"
+      },
+      {
+        "id": "L-05",
+        "classification": "Low",
+        "title": "Incorrect `maxPrice` Parameter Naming in V4 Periphery Errors",
+        "location": "lines 264-271"
+      },
+      {
+        "id": "L-06",
+        "classification": "Low",
+        "title": "Possible Division-by-Zero Panic When Per-Hop Slippage Is Enabled for Uniswap V2 Swaps",
+        "location": "lines 272-288"
+      },
+      {
+        "id": "L-07",
+        "classification": "Low",
+        "title": "Incorrect Parameter Length Validation in decodeSwapExactInParams and decodeSwapExactOutParams",
+        "location": "lines 289-298"
+      },
+      {
+        "id": "N-01",
+        "classification": "Notes & Additional Information",
+        "title": "Unused Tokens and ETH May Get Stuck in Router Contract",
+        "location": "lines 299-314"
+      },
+      {
+        "id": "N-02",
+        "classification": "Notes & Additional Information",
+        "title": "Missing Tests for SwapProxy",
+        "location": "lines 315-326"
+      },
+      {
+        "id": "N-03",
+        "classification": "Notes & Additional Information",
+        "title": "Fee-on-Transfer Tokens Incur Double Fee Through SwapProxy",
+        "location": "lines 327-341"
+      },
+      {
+        "id": "N-04",
+        "classification": "Notes & Additional Information",
+        "title": "Malicious Token Hooks Can Interact with the Router During SwapProxy Execution",
+        "location": "lines 342-351"
+      },
+      {
+        "id": "N-05",
+        "classification": "Notes & Additional Information",
+        "title": "Misleading path Length Validation Error",
+        "location": "lines 352-359"
+      },
+      {
+        "id": "N-06",
+        "classification": "Notes & Additional Information",
+        "title": "Unnecessary Explicit Cast in V4Router Price Calculation",
+        "location": "lines 360-374"
+      },
+      {
+        "id": "N-07",
+        "classification": "Notes & Additional Information",
+        "title": "Duplicated Per-Hop Price Logic and Precision Definitions Across Routers",
+        "location": "lines 375-382"
+      },
+      {
+        "id": "N-08",
+        "classification": "Notes & Additional Information",
+        "title": "Misleading `maxHopSlippage` Name Obscures Per-Hop Price Guard",
+        "location": "lines 383-453"
+      }
+    ]
+  },
+  {
+    "report_id": "openzeppelin-ur-2-3-diff-2026",
+    "title": "OpenZeppelin Universal Router 2.3.0 diff (2026)",
+    "path": "context/derived/Uniswap__universal-router/audit/Universal Router 2.3.0 And V4 Periphery Diff Audit.md",
+    "copies": [
+      "Uniswap__universal-router/audit/Universal Router 2.3.0 And V4 Periphery Diff Audit.pdf"
+    ],
+    "declared_findings": 15,
+    "indexed_findings": 15,
+    "issues": [
+      {
+        "id": "L-01",
+        "classification": "Low",
+        "title": "Allow-Revert Sub-Plans Silently Skip the Nested Execution Gate",
+        "location": "lines 342-349"
+      },
+      {
+        "id": "L-02",
+        "classification": "Low",
+        "title": "Empty-Path Swaps Succeed Without Delivering Output",
+        "location": "lines 350-365"
+      },
+      {
+        "id": "L-03",
+        "classification": "Low",
+        "title": "Permit2 Transfer Commands Ignore the USE_RESOLVED_AMOUNT Sentinel",
+        "location": "lines 366-371"
+      },
+      {
+        "id": "L-04",
+        "classification": "Low",
+        "title": "Sub-Plans Can Overwrite the Parent Plan's Resolved Amount",
+        "location": "lines 372-393"
+      },
+      {
+        "id": "N-01",
+        "classification": "Notes & Additional Information",
+        "title": "The Exact-Output Comment Describes an Over-Delivery That Cannot Happen",
+        "location": "lines 394-404"
+      },
+      {
+        "id": "N-02",
+        "classification": "Notes & Additional Information",
+        "title": "V2 Donation Comment Inaccuracies",
+        "location": "lines 405-412"
+      },
+      {
+        "id": "N-03",
+        "classification": "Notes & Additional Information",
+        "title": "Nested Execute Path Requires Supplying a Deadline",
+        "location": "lines 413-424"
+      },
+      {
+        "id": "N-04",
+        "classification": "Notes & Additional Information",
+        "title": "V2 Exact-Output Swaps Can Succeed Without Delivering the Requested Output",
+        "location": "lines 425-434"
+      },
+      {
+        "id": "N-05",
+        "classification": "Notes & Additional Information",
+        "title": "Fully Hook-Funded Exact-Output Routes Succeed and Leave Pre-Funded Input in the Router",
+        "location": "lines 435-451"
+      },
+      {
+        "id": "N-06",
+        "classification": "Notes & Additional Information",
+        "title": "The Head-Word Guard in `toLengthOffset` Wraps for a Large `_arg`",
+        "location": "lines 452-457"
+      },
+      {
+        "id": "N-07",
+        "classification": "Notes & Additional Information",
+        "title": "`FLAG_ALLOW_REVERT` Has No Effect on Some Universal Router Commands, Contrary to the README",
+        "location": "lines 458-473"
+      },
+      {
+        "id": "N-08",
+        "classification": "Notes & Additional Information",
+        "title": "Missing Head-Word Bound Check in toBytes",
+        "location": "lines 474-480"
+      },
+      {
+        "id": "N-09",
+        "classification": "Notes & Additional Information",
+        "title": "Typos and Inaccurate Documentation",
+        "location": "lines 481-494"
+      },
+      {
+        "id": "N-10",
+        "classification": "Notes & Additional Information",
+        "title": "Duplicated Transient Slot Declarations Allow the Allocation Table to Diverge",
+        "location": "lines 495-502"
+      },
+      {
+        "id": "N-11",
+        "classification": "Notes & Additional Information",
+        "title": "Redundant Interface Cast in V4_PROTOCOL_FEE_UPDATE",
+        "location": "lines 503-577"
+      }
+    ]
+  },
+  {
+    "report_id": "spearbit-v4-periphery-2024",
+    "title": "Spearbit v4-periphery draft (2024)",
+    "path": "context/derived/Uniswap__v4-periphery/audits/DRAFT_Spearbit_audit_periphery.md",
+    "copies": [
+      "Uniswap__v4-periphery/audits/DRAFT_Spearbit_audit_periphery.pdf"
+    ],
+    "declared_findings": 41,
+    "indexed_findings": 41,
+    "issues": [
+      {
+        "id": "5.1.1",
+        "classification": "Medium",
+        "title": "Positions may remain subscribed after burning",
+        "location": "lines 240-258"
+      },
+      {
+        "id": "5.1.2",
+        "classification": "Medium",
+        "title": "Incorrect tick compression for negative ticks in `countInitializedTicksLoaded`",
+        "location": "lines 259-377"
+      },
+      {
+        "id": "5.1.3",
+        "classification": "Medium",
+        "title": "Malicious users may cause unsubscription notifications to fail while successfully unsubscribing",
+        "location": "lines 378-452"
+      },
+      {
+        "id": "5.1.4",
+        "classification": "Medium",
+        "title": "Unsafe casting in `Quoter._swap` when comparing the exact output amounts",
+        "location": "lines 453-709"
+      },
+      {
+        "id": "5.2.1",
+        "classification": "Low",
+        "title": "Violations of Checks-Effects-Interactions pattern",
+        "location": "lines 710-736"
+      },
+      {
+        "id": "5.2.2",
+        "classification": "Low",
+        "title": "Unsafe casting and overflow of negation",
+        "location": "lines 737-811"
+      },
+      {
+        "id": "5.2.3",
+        "classification": "Low",
+        "title": "Incorrect calldata consistency checks in `CalldataDecoder.decodeActionsRouterParams()`",
+        "location": "lines 812-851"
+      },
+      {
+        "id": "5.2.4",
+        "classification": "Low",
+        "title": "`Notifier.hasSubscriber()` should revert for non-existent tokens",
+        "location": "lines 852-870"
+      },
+      {
+        "id": "5.2.5",
+        "classification": "Low",
+        "title": "Inconsistent presence of slippage checks across various `settle` and `take` options",
+        "location": "lines 871-882"
+      },
+      {
+        "id": "5.2.6",
+        "classification": "Low",
+        "title": "`multicall` will revert when ether is sent to unpayable functions",
+        "location": "lines 883-918"
+      },
+      {
+        "id": "5.2.7",
+        "classification": "Low",
+        "title": "`subscribe` allows multiple subscriptions and will work for addresses with no code",
+        "location": "lines 919-972"
+      },
+      {
+        "id": "5.2.8",
+        "classification": "Low",
+        "title": "Notifier._call does not check whether the target has a code",
+        "location": "lines 973-992"
+      },
+      {
+        "id": "5.3.1",
+        "classification": "Gas Optimization",
+        "title": "\"No Self-Permit\" Checks Are Unnecessary",
+        "location": "lines 993-1004"
+      },
+      {
+        "id": "5.3.2",
+        "classification": "Gas Optimization",
+        "title": "countInitializedTicksLoaded can be optimised to only cache tickLowerInitialized",
+        "location": "lines 1005-1122"
+      },
+      {
+        "id": "5.3.3",
+        "classification": "Gas Optimization",
+        "title": "Cleaning up memory in `toId` can be optimized and is not tested",
+        "location": "lines 1123-1165"
+      },
+      {
+        "id": "5.3.4",
+        "classification": "Gas Optimization",
+        "title": "`key.toId()` calculation can be cached in `countInitializedTicksLoaded`",
+        "location": "lines 1166-1247"
+      },
+      {
+        "id": "5.3.5",
+        "classification": "Gas Optimization",
+        "title": "Operations in `countOneBits` can be `unchecked`",
+        "location": "lines 1248-1286"
+      },
+      {
+        "id": "5.3.6",
+        "classification": "Gas Optimization",
+        "title": "`reason` is unnecessarily reassigned to the same value",
+        "location": "lines 1287-1305"
+      },
+      {
+        "id": "5.3.7",
+        "classification": "Gas Optimization",
+        "title": "Avoid `SLOAD`s by caching state variables into local variables for gas savings",
+        "location": "lines 1306-1333"
+      },
+      {
+        "id": "5.3.8",
+        "classification": "Gas Optimization",
+        "title": "`_ownerOf` storage parameter can be used directly in `ERC721Permit_v4.permit`",
+        "location": "lines 1334-1462"
+      },
+      {
+        "id": "5.3.9",
+        "classification": "Gas Optimization",
+        "title": "`QuoteCache.prevAmount` is not required to quote the multi hop swaps",
+        "location": "lines 1463-1555"
+      },
+      {
+        "id": "5.3.10",
+        "classification": "Gas Optimization",
+        "title": "Deleting `amountOutCached` in `quoteExactOutputSingle` is redundant",
+        "location": "lines 1556-1788"
+      },
+      {
+        "id": "5.4.1",
+        "classification": "Informational",
+        "title": "Some contracts don't follow Uniswap's version convention",
+        "location": "lines 1789-1823"
+      },
+      {
+        "id": "5.4.2",
+        "classification": "Informational",
+        "title": "Support for `memory` `config` parameter in `PositionConfigLibrary.toId()`",
+        "location": "lines 1824-1837"
+      },
+      {
+        "id": "5.4.3",
+        "classification": "Informational",
+        "title": "`_swapExactOutput...` does not compare the `params.amountOut` to `ActionConstants.OPEN_DELTA`",
+        "location": "lines 1838-1847"
+      },
+      {
+        "id": "5.4.4",
+        "classification": "Informational",
+        "title": "The use of `_mapRecipient` is inconsistent",
+        "location": "lines 1848-1901"
+      },
+      {
+        "id": "5.4.5",
+        "classification": "Informational",
+        "title": "Unnecessary fee subtraction during token minting",
+        "location": "lines 1902-1924"
+      },
+      {
+        "id": "5.4.6",
+        "classification": "Informational",
+        "title": "`ERC721PermitHashLibrary` does not perform bit cleaning on variables with less than full word width in inline assembly",
+        "location": "lines 1925-1938"
+      },
+      {
+        "id": "5.4.7",
+        "classification": "Informational",
+        "title": "Swap flow reverts must not exceed `MINIMUM_VALID_RESPONSE_LENGTH`",
+        "location": "lines 1939-1954"
+      },
+      {
+        "id": "5.4.8",
+        "classification": "Informational",
+        "title": "Gas limit considerations across chains",
+        "location": "lines 1955-1979"
+      },
+      {
+        "id": "5.4.9",
+        "classification": "Informational",
+        "title": "Memory cleansing is not performed consistently",
+        "location": "lines 1980-2005"
+      },
+      {
+        "id": "5.4.10",
+        "classification": "Informational",
+        "title": "Unused code should be removed",
+        "location": "lines 2006-2030"
+      },
+      {
+        "id": "5.4.11",
+        "classification": "Informational",
+        "title": "Missing NatSpec comments affect readability",
+        "location": "lines 2031-2046"
+      },
+      {
+        "id": "5.4.12",
+        "classification": "Informational",
+        "title": "Assembly blocks can be defined with the new memory-safe syntax",
+        "location": "lines 2047-2065"
+      },
+      {
+        "id": "5.4.13",
+        "classification": "Informational",
+        "title": "Unnecesary override keywords",
+        "location": "lines 2066-2088"
+      },
+      {
+        "id": "5.4.14",
+        "classification": "Informational",
+        "title": "Events missing indexed parameters difficult off-chain monitoring",
+        "location": "lines 2089-2108"
+      },
+      {
+        "id": "5.4.15",
+        "classification": "Informational",
+        "title": "Comment Improvements",
+        "location": "lines 2109-2123"
+      },
+      {
+        "id": "5.4.16",
+        "classification": "Informational",
+        "title": "`UnsupportedAction` can be take out of the loops",
+        "location": "lines 2124-2398"
+      },
+      {
+        "id": "5.4.17",
+        "classification": "Informational",
+        "title": "Use `_positionConfigs(...)` instead of `positionConfigs[...]` to refactor the potential future logic",
+        "location": "lines 2399-2415"
+      },
+      {
+        "id": "5.4.18",
+        "classification": "Informational",
+        "title": "Use `abi.encodeCall` instead of `abi.encodeWithSelector`",
+        "location": "lines 2416-2436"
+      },
+      {
+        "id": "5.4.19",
+        "classification": "Informational",
+        "title": "`MINIMUM_VALID_RESPONSE_LENGTH` can be a greater number",
+        "location": "lines 2437-2480"
+      }
+    ]
+  },
+  {
+    "report_id": "cantina-permissioned-pools-2026",
+    "title": "Cantina Permissioned Pools (2026)",
+    "path": "context/derived/Uniswap__v4-periphery/audits/permissionedPools/Cantina_report_permissioned_pools.md",
+    "copies": [
+      "Uniswap__v4-periphery/audits/permissionedPools/Cantina_report_permissioned_pools.pdf"
+    ],
+    "declared_findings": 20,
+    "indexed_findings": 19,
+    "source_note": "The report summary says 20 total issues, while its severity counts and supplied finding headings total 19.",
+    "issues": [
+      {
+        "id": "3.1.1",
+        "classification": "Medium",
+        "title": "Generic `BURN_6909` steals approved claims",
+        "location": "lines 133-203"
+      },
+      {
+        "id": "3.2.1",
+        "classification": "Low",
+        "title": "Permissioned payment actions bypass swap-only controls",
+        "location": "lines 204-223"
+      },
+      {
+        "id": "3.2.2",
+        "classification": "Low",
+        "title": "PoolManager self-take unwraps raw underlying",
+        "location": "lines 224-247"
+      },
+      {
+        "id": "3.2.3",
+        "classification": "Low",
+        "title": "`PermissionsAdapter` should use SafeERC20 for underlying transfers",
+        "location": "lines 248-265"
+      },
+      {
+        "id": "3.2.4",
+        "classification": "Low",
+        "title": "`PermissionedPositionManager` mints ordinary pools into frozen NFTs",
+        "location": "lines 266-285"
+      },
+      {
+        "id": "3.2.5",
+        "classification": "Low",
+        "title": "PermissionedPositionManager only enforces the hook allowlist when minting",
+        "location": "lines 286-301"
+      },
+      {
+        "id": "3.2.6",
+        "classification": "Low",
+        "title": "Permissioned position transfers drop the LP recipient allowlist",
+        "location": "lines 302-323"
+      },
+      {
+        "id": "3.2.7",
+        "classification": "Low",
+        "title": "Revoked holders can reauthorize liquidity increases",
+        "location": "lines 324-343"
+      },
+      {
+        "id": "3.2.8",
+        "classification": "Low",
+        "title": "`PermissionFlags.hasFlag` can incorrectly return `true` value",
+        "location": "lines 344-388"
+      },
+      {
+        "id": "3.2.9",
+        "classification": "Low",
+        "title": "Mapping a missing `permissionsAdapterFactory` to `UnsupportedProtocol` bricks ERC20 v4 swaps",
+        "location": "lines 389-404"
+      },
+      {
+        "id": "3.2.10",
+        "classification": "Low",
+        "title": "`PermissionsAdapter` does not follow the ERC165 standard for checking interface compatibility",
+        "location": "lines 405-425"
+      },
+      {
+        "id": "3.2.11",
+        "classification": "Low",
+        "title": "Unauthorized `UNSUBSCRIBE` Removes Subscribers",
+        "location": "lines 426-468"
+      },
+      {
+        "id": "3.2.12",
+        "classification": "Low",
+        "title": "`WithdrawClaim` emits unresolved sentinel recipient",
+        "location": "lines 469-486"
+      },
+      {
+        "id": "3.2.13",
+        "classification": "Low",
+        "title": "`PermissionsAdapter.depositForVerification` should use SafeERC20 for token transfers",
+        "location": "lines 487-509"
+      },
+      {
+        "id": "3.3.1",
+        "classification": "Gas Optimization",
+        "title": "`PermissionedHooks` : Redundant `Hooks.validateHookPermissions()` call",
+        "location": "lines 510-531"
+      },
+      {
+        "id": "3.3.2",
+        "classification": "Gas Optimization",
+        "title": "`PermissionedPositionManager._pay()` contains duplicate statements in `if` / `else` block",
+        "location": "lines 532-586"
+      },
+      {
+        "id": "3.4.1",
+        "classification": "Informational",
+        "title": "`Permissioned v4 Permit2` truncates large amounts",
+        "location": "lines 587-605"
+      },
+      {
+        "id": "3.4.2",
+        "classification": "Informational",
+        "title": "`PermissionedHooks` trusts wrapper-reported users",
+        "location": "lines 606-630"
+      },
+      {
+        "id": "3.4.3",
+        "classification": "Informational",
+        "title": "Permissioned admins can seize LP NFTs",
+        "location": "lines 631-658"
+      }
+    ]
+  },
+  {
+    "report_id": "openzeppelin-permissioned-pools-2026",
+    "title": "OpenZeppelin Permissioned Pools (2026)",
+    "path": "context/derived/Uniswap__v4-periphery/audits/permissionedPools/OpenZeppelin_permissioned_pools_report.md",
+    "copies": [
+      "Uniswap__v4-periphery/audits/permissionedPools/OpenZeppelin_permissioned_pools_report.pdf"
+    ],
+    "declared_findings": 22,
+    "indexed_findings": 22,
+    "issues": [
+      {
+        "id": "M-01",
+        "classification": "Medium",
+        "title": "Mint Recipient Is Not Permission-Checked",
+        "location": "lines 170-179"
+      },
+      {
+        "id": "M-02",
+        "classification": "Medium",
+        "title": "`PermissionedPositionManager` Does Not Remap `CONTRACT_BALANCE` for Permissioned Adapter Currencies",
+        "location": "lines 180-197"
+      },
+      {
+        "id": "M-03",
+        "classification": "Medium",
+        "title": "Positions Can Be Opened Before Adapter Verification And Later Realize Permissioned-Token Exposure",
+        "location": "lines 198-213"
+      },
+      {
+        "id": "M-04",
+        "classification": "Medium",
+        "title": "User Permission Checks Can Be Bypassed When Permissioned Pools Use Non-Enforcing Hooks",
+        "location": "lines 214-225"
+      },
+      {
+        "id": "L-01",
+        "classification": "Low",
+        "title": "`CONTRACT_BALANCE` Settlement Is Order-Dependent When Two Adapters Share One Underlying Token",
+        "location": "lines 226-245"
+      },
+      {
+        "id": "L-02",
+        "classification": "Low",
+        "title": "Position Transfer Recipient Is Not Permission-Checked",
+        "location": "lines 246-267"
+      },
+      {
+        "id": "L-03",
+        "classification": "Low",
+        "title": "SWEEP of Adapter Currency Can Leave Underlying Tokens in PositionManager",
+        "location": "lines 268-287"
+      },
+      {
+        "id": "L-04",
+        "classification": "Low",
+        "title": "PermissionsAdapter Burns Wrapped Units Before Confirming Underlying Transfer Success",
+        "location": "lines 288-299"
+      },
+      {
+        "id": "L-05",
+        "classification": "Low",
+        "title": "PermissionedPositionManager Uses the Same ERC-721 Name and Symbol as PositionManager",
+        "location": "lines 300-317"
+      },
+      {
+        "id": "L-06",
+        "classification": "Low",
+        "title": "Donation Is Unavailable Through the Allowed Wrapper",
+        "location": "lines 318-334"
+      },
+      {
+        "id": "L-07",
+        "classification": "Low",
+        "title": "Hook Allowlist Revocation Is Not Enforced on Liquidity Increases",
+        "location": "lines 335-346"
+      },
+      {
+        "id": "L-08",
+        "classification": "Low",
+        "title": "CREATE3 Hook Address Mining Is Preemptable With a Public Deployer",
+        "location": "lines 347-365"
+      },
+      {
+        "id": "L-09",
+        "classification": "Low",
+        "title": "Allowlisted Permissions Can Be Delegated Through Smart Account Execution",
+        "location": "lines 366-382"
+      },
+      {
+        "id": "L-10",
+        "classification": "Low",
+        "title": "Unilateral Admin Transfer Authority in `PermissionedPositionManager.transferFrom`",
+        "location": "lines 383-400"
+      },
+      {
+        "id": "N-01",
+        "classification": "Notes & Additional Information",
+        "title": "Redundant Conditional in `PermissionsAdapter._update`",
+        "location": "lines 401-410"
+      },
+      {
+        "id": "N-02",
+        "classification": "Notes & Additional Information",
+        "title": "Typos in the Events and Errors in the `IPermissionsAdapterFactory` Interface",
+        "location": "lines 411-423"
+      },
+      {
+        "id": "N-03",
+        "classification": "Notes & Additional Information",
+        "title": "PermissionsAdapter Constructor Reverts For Tokens That Do Not Implement Optional ERC20 Metadata Functions",
+        "location": "lines 424-431"
+      },
+      {
+        "id": "N-04",
+        "classification": "Notes & Additional Information",
+        "title": "Permissionless Adapter Verification Does Not Prove Token Control",
+        "location": "lines 432-450"
+      },
+      {
+        "id": "N-05",
+        "classification": "Notes & Additional Information",
+        "title": "Permission Flag Evaluation Semantics Diverge Between Helpers",
+        "location": "lines 451-462"
+      },
+      {
+        "id": "N-06",
+        "classification": "Notes & Additional Information",
+        "title": "Inverted NatSpec for DeltaNotPositive/ DeltaNotNegative in DeltaResolver",
+        "location": "lines 463-479"
+      },
+      {
+        "id": "N-07",
+        "classification": "Notes & Additional Information",
+        "title": "Unused `ALL_ALLOWED` Permission Flag in `PermissionFlags`",
+        "location": "lines 480-497"
+      },
+      {
+        "id": "N-08",
+        "classification": "Notes & Additional Information",
+        "title": "COMMAND_FLAG_ALLOW_REVERT Is Ineffective for COMMAND_V4_SWAP in PermissionedV4Router",
+        "location": "lines 498-568"
+      }
+    ]
+  },
+  {
+    "report_id": "openzeppelin-permissioned-pools-fix-2026",
+    "title": "OpenZeppelin Permissioned Pools fix review (2026)",
+    "path": "context/derived/Uniswap__v4-periphery/audits/permissionedPools/OpenZeppelin_permissioned_pools_fix_review_report.md",
+    "copies": [
+      "Uniswap__v4-periphery/audits/permissionedPools/OpenZeppelin_permissioned_pools_fix_review_report.pdf"
+    ],
+    "declared_findings": 4,
+    "indexed_findings": 4,
+    "issues": [
+      {
+        "id": "L-01",
+        "classification": "Low",
+        "title": "Force-Exit Does Not Allow Custom Removal Bounds Or Hook Data",
+        "location": "lines 138-154"
+      },
+      {
+        "id": "N-01",
+        "classification": "Notes & Additional Information",
+        "title": "Inconsistent Handling Of Permissions Adapter Currencies Between Position Manager And Router",
+        "location": "lines 155-177"
+      },
+      {
+        "id": "CR-01",
+        "classification": "Notes & Additional Information",
+        "title": "Renouncing Adapter Ownership Permanently Disables the Force-Exit",
+        "location": "lines 178-194"
+      },
+      {
+        "id": "CR-02",
+        "classification": "Notes & Additional Information",
+        "title": "Subscribers Can Indefinitely Prevent the Force-Exit of a Position",
+        "location": "lines 195-279"
+      }
+    ]
+  }
+]
+
