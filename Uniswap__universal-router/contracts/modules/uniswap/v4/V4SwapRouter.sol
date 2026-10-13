@@ -21,7 +21,8 @@ abstract contract V4SwapRouter is PermissionedV4Router, Permit2Payments {
 
     constructor(address _poolManager, address _permissionsAdapterFactory)
         PermissionedV4Router(IPoolManager(_poolManager), IPermissionsAdapterFactory(_permissionsAdapterFactory))
-    {}
+    {} //@audit right here we have the poolManager and the permissionsAdapterFactory
+    //@audit right here also we have the //@audit right here we have the permissioned v4 router set up from there 
 
     /// @notice Maps the USE_RESOLVED_AMOUNT sentinel in a v4 swap amount field through the RESOLVE register
     /// @dev Reverts on a register value that does not fit uint128, since v4 swap amounts are uint128

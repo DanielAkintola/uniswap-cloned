@@ -24,13 +24,13 @@ library ResolvedAmount {
     }
 
     function get() internal view returns (uint256 amount) {
-        assembly ('memory-safe') {
+        assembly ('memory-safe') { //@audit right here we get the tload 
             amount := tload(RESOLVED_AMOUNT_SLOT)
         }
     }
 
     function reset() internal {
-        assembly ('memory-safe') {
+        assembly ('memory-safe') { //@audit right here we have a tstore and then we just set it 0 from there 
             tstore(RESOLVED_AMOUNT_SLOT, 0)
         }
     }
@@ -39,10 +39,13 @@ library ResolvedAmount {
     /// register, any other value passes through unchanged
     /// @dev Reverts on an empty register so the sentinel can never fall through as a zero amount, which the v4
     /// swap helpers would read as OPEN_DELTA
-    function map(uint256 amount) internal view returns (uint256) {
-        if (amount != Constants.USE_RESOLVED_AMOUNT) return amount;
-        amount = get();
-        if (amount == 0) revert ResolvedAmountUnset();
-        return amount;
+    function map(uint256 amount) internal view returns (uint256) { //@audit right here we want to map 
+        if (amount != Constants.USE_RESOLVED_AMOUNT) return amount; //@audit right here if the amount != USE_resolved_amount 
+        //@audit right here we try to use the resolved_amount we then return the amount from here 
+
+        amount = get(); //@audit then we get the amount
+        if (amount == 0) revert ResolvedAmountUnset(); //@audit right here if the amount is 0 then we revert 
+        return amount; //@audit right here we returned the amount
+        //@audit right here we have the amount gotten to be executed from there too 
     }
 }

@@ -15,7 +15,7 @@ library Locker {
 
     function get() internal view returns (address locker) {
         assembly ('memory-safe') {
-            locker := tload(LOCKER_SLOT)
+            locker := tload(LOCKER_SLOT) //@audit right here we tload_lcoker_slot 
         }
     }
 

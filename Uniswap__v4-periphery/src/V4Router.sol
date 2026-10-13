@@ -95,12 +95,15 @@ abstract contract V4Router is IV4Router, BaseActionsRouter, DeltaResolver {
         if (amountIn == ActionConstants.OPEN_DELTA) {
             amountIn =
                 _getFullCredit(params.zeroForOne ? params.poolKey.currency0 : params.poolKey.currency1).toUint128();
-        }
+        } //@audit right here we have the amountIn == open_delta and get the full credit from here too
+
         uint128 amountOut = _swapOutput(
             _swap(params.poolKey, params.zeroForOne, -int256(uint256(amountIn)), params.hookData), params.zeroForOne
         );
+
+        //@audit right here we checked if the amountOut < amountOutMinimum
         if (amountOut < params.amountOutMinimum) revert V4TooLittleReceived(params.amountOutMinimum, amountOut);
-        if (params.minHopPriceX36 != 0) {
+        if (params.minHopPriceX36 != 0) { //@audit right here if the minHopPricex36 != 0 then 
             uint256 priceX36 = uint256(amountOut) * PRECISION / amountIn;
             if (priceX36 < params.minHopPriceX36) {
                 revert V4TooLittleReceivedPerHopSingle(params.minHopPriceX36, priceX36);

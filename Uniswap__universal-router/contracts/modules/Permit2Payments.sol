@@ -19,8 +19,11 @@ abstract contract Permit2Payments is Payments {
     /// @param to The recipient of the transfer
     /// @param amount The amount to transfer
     function permit2TransferFrom(address token, address from, address to, uint160 amount) internal {
-        PERMIT2.transferFrom(from, to, amount, token);
-    }
+        //@audit right here that's what is the most important 
+        PERMIT2.transferFrom(from, to, amount, token); //@audit right here we have permot2
+    } 
+    
+    //@audit right here we want to permit2 and perform transferFrom from there with the from, to, amount and the token 
 
     /// @notice Performs a batch transferFrom on Permit2
     /// @dev Transfers one detail at a time so each amount can be mapped through the RESOLVE register without
@@ -29,11 +32,12 @@ abstract contract Permit2Payments is Payments {
     /// @param owner The address that should be the owner of all transfers
     function permit2TransferFrom(IAllowanceTransfer.AllowanceTransferDetails[] calldata batchDetails, address owner)
         internal
-    {
-        uint256 batchLength = batchDetails.length;
+    { 
+        uint256 batchLength = batchDetails.length; //@audit right here too we got the lenght 
         for (uint256 i = 0; i < batchLength; ++i) {
             IAllowanceTransfer.AllowanceTransferDetails calldata details = batchDetails[i];
-            if (details.from != owner) revert FromAddressIsNotOwner();
+            if (details.from != owner) revert FromAddressIsNotOwner(); //@audit right here we got the amount to deal with 
+            //@audit right here we got the details.token, owner, with the to with the resolvedamount.map
             permit2TransferFrom(details.token, owner, details.to, ResolvedAmount.map(details.amount).toUint160());
         }
     }
@@ -43,8 +47,8 @@ abstract contract Permit2Payments is Payments {
     /// @param payer The address to pay for the transfer
     /// @param recipient The recipient of the transfer
     /// @param amount The amount to transfer
-    function payOrPermit2Transfer(address token, address payer, address recipient, uint256 amount) internal {
-        if (payer == address(this)) pay(token, recipient, amount);
-        else permit2TransferFrom(token, payer, recipient, amount.toUint160());
+    function payOrPermit2Transfer(address token, address payer, address recipient, uint256 amount) internal { //@note when we understand the system better see if there is anyway this can break the logic
+        if (payer == address(this)) pay(token, recipient, amount); //@audit right here we have if the payer is address(this) -> pay(token, recipient) -> 
+        else permit2TransferFrom(token, payer, recipient, amount.toUint160()); //@audit right here else we performed permit to transfer
     }
 }

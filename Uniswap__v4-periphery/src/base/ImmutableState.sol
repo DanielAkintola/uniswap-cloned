@@ -16,7 +16,7 @@ contract ImmutableState is IImmutableState {
     /// @notice Only allow calls from the PoolManager contract
     modifier onlyPoolManager() {
         if (msg.sender != address(poolManager)) revert NotPoolManager();
-        _;
+        _; //@audit right here we ensured only the pool manager we can discuess this with 
     }
 
     constructor(IPoolManager _poolManager) {

@@ -36,5 +36,5 @@ library Constants {
     /// the v4 SETTLE and TAKE amounts, the PERMIT2_TRANSFER_FROM and PERMIT2_TRANSFER_FROM_BATCH amounts, the
     /// TRANSFER value, the WRAP_ETH and UNWRAP_WETH_EXACT amounts, and the ACROSS_V4_DEPOSIT_V3 inputAmount.
     /// Minimums, caps, thresholds, portions and signed permit amounts keep their literal meaning.
-    uint256 internal constant USE_RESOLVED_AMOUNT = type(uint128).max;
+    uint256 internal constant USE_RESOLVED_AMOUNT = type(uint128).max; //@audit right here we want to get the maximum of the token from there
 }

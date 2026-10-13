@@ -18,7 +18,7 @@ contract MigratorImmutables {
     /// @notice v4 PositionManager address
     IPositionManager public immutable V4_POSITION_MANAGER;
 
-    constructor(MigratorParameters memory params) {
+    constructor(MigratorParameters memory params) { //@audit right here we have both the positionmanager for the v3 and v4 set here 
         V3_POSITION_MANAGER = INonfungiblePositionManager(params.v3PositionManager);
         V4_POSITION_MANAGER = IPositionManager(params.v4PositionManager);
     }

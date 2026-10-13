@@ -13,39 +13,41 @@ abstract contract ChainedActions is Payments {
 
     IV3SpokePool public immutable SPOKE_POOL;
 
-    constructor(address spokePool) {
-        SPOKE_POOL = IV3SpokePool(spokePool);
-    }
+    constructor(address spokePool) { //@audit right here we have the spokepool
+        SPOKE_POOL = IV3SpokePool(spokePool); //@audit right here we set the spoke_pool right away from here 
+    } //@audit we have set the spoke pool
 
     function _acrossV4DepositV3(bytes calldata input) internal {
-        AcrossV4DepositV3Params memory params = abi.decode(input, (AcrossV4DepositV3Params));
+        AcrossV4DepositV3Params memory params = abi.decode(input, (AcrossV4DepositV3Params)); //@audit right here we are assuming 
+        //@audit the input will be of the encoded type of params
 
-        uint256 inputAmount = ResolvedAmount.map(params.inputAmount);
-        uint256 callValue = 0;
+        uint256 inputAmount = ResolvedAmount.map(params.inputAmount); //@audit here we want to map the inputAmount and map it what do we need to do
+        uint256 callValue = 0; //@audit callValue is declared 
 
         // Resolve sentinel value for inputAmount
-        if (inputAmount == ActionConstants.CONTRACT_BALANCE) {
-            if (params.useNative) {
-                inputAmount = address(this).balance;
-            } else {
-                inputAmount = IERC20(params.inputToken).balanceOf(address(this));
+        if (inputAmount == ActionConstants.CONTRACT_BALANCE) { //@audit use contract_balance 
+            if (params.useNative) { //@audit right here we want to useNative 
+                inputAmount = address(this).balance; //@audit right here then and there we update our 
+            } else { //@audit right here we have the balanceOf the inputAmount too
+                inputAmount = IERC20(params.inputToken).balanceOf(address(this)); //@audit right here too 
             }
         }
 
         if (params.useNative) {
             // Require ETH path to use WETH as inputToken per Across docs.
             // Router must currently hold ETH equal to inputAmount.
-            callValue = inputAmount;
+            callValue = inputAmount; //@audit right here we have the callValut to be the input amount 
         } else {
             // Approve SpokePool to pull ERC20 from router
-            IERC20(params.inputToken).forceApprove(address(SPOKE_POOL), inputAmount);
+            //@audit right here else we approved the spoke_pool to use that input amount 
+            IERC20(params.inputToken).forceApprove(address(SPOKE_POOL), inputAmount); //@audit right here we approved the spoke_pool the input amount right here and there 
         }
 
-        SPOKE_POOL.depositV3{value: callValue}(
+        SPOKE_POOL.depositV3{value: callValue}( //@audit right here and there this is performed 
             params.depositor,
             params.recipient,
-            params.inputToken,
-            params.outputToken,
+            params.inputToken, //@audit right here 
+            params.outputToken, //@audit right here we have the 
             inputAmount,
             params.outputAmount,
             params.destinationChainId,

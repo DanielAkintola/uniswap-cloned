@@ -119,6 +119,7 @@ library BytesLib {
     /// @notice Equivalent to abi.decode(bytes, bytes[])
     /// @param _bytes The input bytes string to extract an parameters from
     function decodeCommandsAndInputs(bytes calldata _bytes) internal pure returns (bytes calldata, bytes[] calldata) {
-        return _bytes.decodeActionsRouterParams();
+        //@audit right here we have the decodeActionsRouterParams
+        return _bytes.decodeActionsRouterParams(); //@audit right here we have the bytes calldata and the bytes[]
     }
 }

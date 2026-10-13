@@ -7,14 +7,14 @@ import {NESTED_UNLOCK_SLOT} from './TransientSlots.sol';
 /// route inside a PoolManager unlock opened by another contract.
 library NestedUnlock {
     function set(bool permitted) internal {
-        assembly ('memory-safe') {
-            tstore(NESTED_UNLOCK_SLOT, permitted)
+        assembly ('memory-safe') { 
+            tstore(NESTED_UNLOCK_SLOT, permitted) //@audit right here we set it to true 
         }
     }
 
     function isPermitted() internal view returns (bool permitted) {
         assembly ('memory-safe') {
-            permitted := tload(NESTED_UNLOCK_SLOT)
+            permitted := tload(NESTED_UNLOCK_SLOT) //@audit right the same thing here 
         }
     }
 }

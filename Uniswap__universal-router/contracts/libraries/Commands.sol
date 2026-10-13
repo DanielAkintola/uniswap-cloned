@@ -1,12 +1,12 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
+ // SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity ^0.8.24;
 
 /// @title Commands
 /// @notice Command Flags used to decode commands
 library Commands {
     // Masks to extract certain bits of commands
-    bytes1 internal constant FLAG_ALLOW_REVERT = 0x80;
-    bytes1 internal constant COMMAND_TYPE_MASK = 0x7f;
+    bytes1 internal constant FLAG_ALLOW_REVERT = 0x80; //@audit right here we have the 
+    bytes1 internal constant COMMAND_TYPE_MASK = 0x7f; //@audit right here we have the 0x7f
 
     // Command types are 7 bits (COMMAND_TYPE_MASK); 0x40-0x5f is the highest assigned range, reserved for 3rd party integrations.
     // The commands are executed in nested if blocks to minimise gas consumption
@@ -41,12 +41,13 @@ library Commands {
     uint256 constant V4_PROTOCOL_FEE_UPDATE = 0x16;
     uint256 constant V3_PROTOCOL_FEE_UPDATE = 0x17;
     // COMMAND_PLACEHOLDER = 0x18 -> 0x20
-
-    // Command Types where 0x21<=value<=0x3f
-    uint256 constant EXECUTE_SUB_PLAN = 0x21;
+ 
+    // Command Types where 0x21<=value<=0x3f //@audit right here we also have the 0x21 ---------- 0x3f 
+    uint256 constant EXECUTE_SUB_PLAN = 0x21; //@audit right here we have the execute_sub_plan right here too
     // COMMAND_PLACEHOLDER for 0x22 to 0x3f
 
-    // Command Types where 0x40<=value<=0x5f
+    // Command Types where 0x40<=value<=0x5f //@audit right here we have the 0x40 <= value <= 0x5f
     // Reserved for 3rd party integrations
-    uint256 constant ACROSS_V4_DEPOSIT_V3 = 0x40;
+    uint256 constant ACROSS_V4_DEPOSIT_V3 = 0x40; //@audit right here we have the across_v4_deposit_v3 
+    //@audit right here and this is mapped to 0x40
 }

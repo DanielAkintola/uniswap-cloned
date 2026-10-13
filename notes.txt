@@ -1,0 +1,5 @@
+# possible bugs
+
+we are reading the reserves and making an external call for balanceof of a pair, now within that external call balance can change and the idea os routers is to support any compatible ERC-20 token
+//@audit users are not able to read their commands output properly properly 
+can we approve the router especially with ids and then make the router call somethings that we didn;t expect it to call
